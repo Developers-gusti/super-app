@@ -17,7 +17,7 @@ class PermissionController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('can:read permission')->only('index');
+        $this->middleware('can:read_permission')->only('index');
     }
     public function index(Request $request)
     {

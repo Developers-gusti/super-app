@@ -3,7 +3,7 @@
 <div id="kt_header" style="background-color:rgb(255, 255, 255);" class="header align-items-stretch">
     <div class="container-fluid py-6 py-lg-0 d-flex flex-column flex-lg-row align-items-lg-stretch justify-content-lg-between">
         <div class="page-title d-flex justify-content-center flex-column me-5">
-            <h1 class="d-flex flex-column text-dark fw-bold fs-3 mb-0">Permission</h1>
+            <h1 class="d-flex flex-column text-dark fw-bold fs-3 mb-0">@lang('label.menu.permission')</h1>
             <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 pt-1">
                 <li class="breadcrumb-item text-muted">
                     <a href="/metronic8/demo8/../demo8/index.html" class="text-muted text-hover-primary">Home</a>
@@ -55,15 +55,15 @@
                     <div class="card card-xl-stretch">
                         <div class="card-body pt-5">
                             <table id="kt_datatable_example_5" class="table table-row-bordered gy-2 gs-3 border rounded">
-                                <thead class="fs-7">
+                                <thead class="fs-8">
                                     <tr class="fw-bolder text-gray-800 px-7">
-                                        <th width="10%"></th>
+                                        <th width="15%"></th>
                                         <th width="5%">No</th>
                                         <th>Name</th>
                                         <th>Dibuat Pada</th>
                                     </tr>
                                 </thead>
-                                <tbody class="fs-7" style="vertical-align: middle;">
+                                <tbody class="fs-8" style="vertical-align: middle;">
 
                                 </tbody>
                             </table>
