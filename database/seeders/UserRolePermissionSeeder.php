@@ -12,7 +12,7 @@ use Str;
 class UserRolePermissionSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     *_run the database seeds.
      *
      * @return void
      */
@@ -26,7 +26,7 @@ class UserRolePermissionSeeder extends Seeder
         # create User
         $superadmin = User::create(array_merge([
             'name' => 'Super Admin',
-            'email' => 'superadmin@gmail.com',  
+            'email' => 'superadmin@gmail.com',
         ],$detail));
         $adminfinance = User::create(array_merge([
             'name' => 'Admin Finance',
@@ -43,34 +43,34 @@ class UserRolePermissionSeeder extends Seeder
 
         #create permission
         #menu setting
-        Permission::create(['name'=>'menu setting']);
-        Permission::create(['name'=>'create user']);
-        Permission::create(['name'=>'read user']);
-        Permission::create(['name'=>'update user']);
-        Permission::create(['name'=>'delete user']);
-        Permission::create(['name'=>'create role']);
-        Permission::create(['name'=>'read role']);
-        Permission::create(['name'=>'update role']);
-        Permission::create(['name'=>'delete role']);
-        Permission::create(['name'=>'create permission']);
-        Permission::create(['name'=>'read permission']);
-        Permission::create(['name'=>'update permission']);
-        Permission::create(['name'=>'delete permission']);
+        Permission::create(['name'=>'menu_setting']);
+        Permission::create(['name'=>'create_user']);
+        Permission::create(['name'=>'read_user']);
+        Permission::create(['name'=>'update_user']);
+        Permission::create(['name'=>'delete_user']);
+        Permission::create(['name'=>'create_role']);
+        Permission::create(['name'=>'read_role']);
+        Permission::create(['name'=>'update_role']);
+        Permission::create(['name'=>'delete_role']);
+        Permission::create(['name'=>'create_permission']);
+        Permission::create(['name'=>'read_permission']);
+        Permission::create(['name'=>'update_permission']);
+        Permission::create(['name'=>'delete_permission']);
 
         #Give Permission
-        $role_superadmin->givePermissionTo('menu setting');
-        $role_superadmin->givePermissionTo('create user');
-        $role_superadmin->givePermissionTo('read user');
-        $role_superadmin->givePermissionTo('update user');
-        $role_superadmin->givePermissionTo('delete user');
-        $role_superadmin->givePermissionTo('create role');
-        $role_superadmin->givePermissionTo('read role');
-        $role_superadmin->givePermissionTo('update role');
-        $role_superadmin->givePermissionTo('delete role');
-        $role_superadmin->givePermissionTo('create permission');
-        $role_superadmin->givePermissionTo('read permission');
-        $role_superadmin->givePermissionTo('update permission');
-        $role_superadmin->givePermissionTo('delete permission');
+        $role_superadmin->givePermissionTo('menu_setting');
+        $role_superadmin->givePermissionTo('create_user');
+        $role_superadmin->givePermissionTo('read_user');
+        $role_superadmin->givePermissionTo('update_user');
+        $role_superadmin->givePermissionTo('delete_user');
+        $role_superadmin->givePermissionTo('create_role');
+        $role_superadmin->givePermissionTo('read_role');
+        $role_superadmin->givePermissionTo('update_role');
+        $role_superadmin->givePermissionTo('delete_role');
+        $role_superadmin->givePermissionTo('create_permission');
+        $role_superadmin->givePermissionTo('read_permission');
+        $role_superadmin->givePermissionTo('update_permission');
+        $role_superadmin->givePermissionTo('delete_permission');
 
     }
 }

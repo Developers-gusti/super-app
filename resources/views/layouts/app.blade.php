@@ -163,7 +163,7 @@
                                         <span class="menu-title">{{ __('label.dashboard') }}</span>
                                     </a>
                                 </div>
-                                @can('menu setting')
+                                @can('menu_setting')
                                 <div data-kt-menu-trigger="click" class="menu-item {{ request()->routeIs('settings*') ? 'here show' : ''  }} menu-accordion">
 									<span class="menu-link">
                                         <span class="menu-icon"> <i class="bi bi-gear" style="font-size: 1.5rem;"></i></span>
@@ -171,7 +171,7 @@
 										<span class="menu-arrow"></span>
 									</span>
 									<div class="menu-sub menu-sub-accordion menu-active-bg">
-										@can('read user')
+										@can('read_user')
                                         <div class="menu-item">
 											<a class="menu-link {{ request()->routeIs('settings.user*') ? 'active' : ''  }}" href="{{ route('settings.user') }}">
 												<span class="menu-bullet">
@@ -181,7 +181,7 @@
 											</a>
 										</div>
                                         @endcan
-										@can('read role')
+										@can('read_role')
                                         <div class="menu-item">
 											<a class="menu-link" href="../../demo1/dist/dashboards/ecommerce.html">
 												<span class="menu-bullet">
@@ -191,7 +191,7 @@
 											</a>
 										</div>
                                         @endcan
-										@can('read permission')
+										@can('read_permission')
                                         <div class="menu-item">
 											<a class="menu-link {{ request()->routeIs('settings.permission*') ? 'active' : ''  }}" href="{{route('settings.permission')}}">
 												<span class="menu-bullet">

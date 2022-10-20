@@ -20,7 +20,7 @@ Route::get('/', function () {return view('auth.login');});
 Route::middleware(['auth:sanctum','prevent-back-history',config('jetstream.auth_session'),'verified'])->group(function () {
     Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
 });
-Route::get('language/{locale}', function($locale){
+Route::get('/language', function($locale){
     app()->setLocale($locale);
     session()->put('locale',$locale);
     return redirect()->back();
