@@ -40,7 +40,7 @@
                         </div>
                     </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="../../demo1/dist/.html" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app"><i class="bi bi-person-plus-fill mr-2"></i> Buat User Baru</a>
+                    <button type="button" id="modalLaunch" class="btn btn-sm btn-primary"><i class="bi bi-person-plus-fill mr-2"></i> Buat User Baru</button>
 
                 </div>
             </div>
@@ -71,6 +71,30 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="kt_modal_1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="svg-icon svg-icon-2x"></span>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
@@ -111,6 +135,10 @@
              "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
              ">"
            });
+
+        $('#modalLaunch').on('click',function(){
+            alert('wefwef');
+        });
     })
 </script>
 @endsection

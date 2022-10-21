@@ -15,8 +15,8 @@
 		<link href="{{ asset('build/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('build/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('build/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
-        <script src="{{ asset('build/assets/plugins/global/plugins.bundle.js') }}"></script>
-		<script src="{{ asset('build/assets/js/scripts.bundle.js') }}"></script>
+
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
         <style>
             .icon_color_blue{
                 color:#009ef7;
@@ -229,8 +229,8 @@
 				</svg>
 			</span>
 		</div>
-		<script>var hostUrl = "assets/";</script>
-
+        <script src="{{ asset('build/assets/plugins/global/plugins.bundle.js') }}"></script>
+		<script src="{{ asset('build/assets/js/scripts.bundle.js') }}"></script>
 		<script src="{{ asset('build/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 		<script src="{{ asset('build/assets/js/custom/widgets.js') }}"></script>
 	</body>
