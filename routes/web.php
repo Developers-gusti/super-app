@@ -14,16 +14,9 @@ use Illuminate\Support\Facades\Log;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {return redirect('/'.str_replace('_', '-', app()->getLocale()) );});
-Route::prefix('{locale}')->where(['locale' => '[a-zA-Z]{2}'])->group(function () {
-Route::get('/', function () {return view('auth.login');});
+Route::get('/', function () { return view('auth.login');});
 Route::middleware(['auth:sanctum','prevent-back-history',config('jetstream.auth_session'),'verified'])->group(function () {
     Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
 });
-Route::get('/language', function($locale){
-    app()->setLocale($locale);
-    session()->put('locale',$locale);
-    return redirect()->back();
-});
-});
+Route::get('/language/{locale}', [LocalizationController::class,'lang'])->name('swich.lang');
 

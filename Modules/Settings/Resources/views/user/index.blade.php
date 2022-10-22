@@ -40,8 +40,8 @@
                         </div>
                     </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="../../demo1/dist/.html" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app"><i class="bi bi-person-plus-fill mr-2"></i> Buat User Baru</a>
-                    
+                    <button type="button" id="modalLaunch" class="btn btn-sm btn-primary"><i class="bi bi-person-plus-fill mr-2"></i> Buat User Baru</button>
+
                 </div>
             </div>
         </div>
@@ -56,20 +56,45 @@
 
                         <div class="card-body pt-5">
                             <table id="kt_datatable_example_5" class="table table-row-bordered gy-3 gs-2 border rounded">
-                                <thead class="fs-9">
+                                <thead class="fs-8">
                                     <tr class="fw-bolder text-gray-800 px-7">
-                                        <th class="ml-0" width="10%"></th>
+                                        <th width="15%"></th>
+                                        <th>No.</th>
                                         <th>Name</th>
                                         <th>Email</th>
                                     </tr>
                                 </thead>
-                                <tbody class="fs-8">
+                                <tbody class="fs-8" style="vertical-align: middle;"
 
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="kt_modal_1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="svg-icon svg-icon-2x"></span>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
@@ -85,6 +110,12 @@
             },
             columns: [
                 {data: 'action', name: 'action'},
+                {
+                    "data":null, "sortable":false, "orderable":false,
+                    render: function(data, type, row, meta){
+                        return meta.row + meta.settings._iDisplayStart+1
+                    }
+                },
                 {data: 'name', name: 'name'},
                 {data: 'email', name: 'email'},
             ],
@@ -104,6 +135,10 @@
              "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
              ">"
            });
+
+        $('#modalLaunch').on('click',function(){
+            alert('wefwef');
+        });
     })
 </script>
 @endsection

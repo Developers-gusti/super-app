@@ -59,6 +59,7 @@ class UserRolePermissionSeeder extends Seeder
 
         #Give Permission
         $role_superadmin->givePermissionTo('menu_setting');
+        $role_adminfinance->givePermissionTo('menu_setting');
         $role_superadmin->givePermissionTo('create_user');
         $role_superadmin->givePermissionTo('read_user');
         $role_superadmin->givePermissionTo('update_user');

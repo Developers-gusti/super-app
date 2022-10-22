@@ -15,9 +15,17 @@
 		<link href="{{ asset('build/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('build/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('build/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
-        <script src="{{ asset('build/assets/plugins/global/plugins.bundle.js') }}"></script>
-		<script src="{{ asset('build/assets/js/scripts.bundle.js') }}"></script>
+
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+        <script>
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="token"]').attr('value')
+                }
+            });
+        </script>
         <style>
+
             .icon_color_blue{
                 color:#009ef7;
             }
@@ -83,6 +91,29 @@
 											<div class="menu-item px-5 my-1">
 												<a href="/metronic8/demo8/../demo8/account/settings.html" class="menu-link px-5">Account Settings</a>
 											</div>
+                                            <div class="menu-item px-5" data-kt-menu-trigger="hover" data-kt-menu-placement="left-start">
+												<a href="#" class="menu-link px-5">
+													<span class="menu-title position-relative">Language
+                                                    @foreach (Config::get('languages') as $lang =>$language)
+                                                    @if ($lang == App::getLocale())
+													<span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">{{ $language['name']}}
+                                                        <span class="flag-icons flag-icons-gr flag-icons-squared"></span></span>
+                                                    @endif
+                                                    @endforeach
+                                                </span>
+												</a>
+												<!--begin::Menu sub-->
+												<div class="menu-sub menu-sub-dropdown w-175px py-4" style="">
+													@foreach (Config::get('languages') as $lang =>$language)
+                                                    <div class="menu-item px-3">
+														<a href="{{ route('swich.lang',$lang) }}" class="menu-link d-flex px-5 @if ($lang == App::getLocale()) active  @endif">
+														<span class="symbol symbol-20px me-4 flag-icon  {{ $language['flag']  }} "></span>{{ $language['name'] }}</a>
+													</div>
+													@endforeach
+												</div>
+												<!--end::Menu sub-->
+											</div>
+
 											<!--end::Menu item-->
 											<!--begin::Menu item-->
 											<div class="menu-item px-5">
@@ -229,8 +260,8 @@
 				</svg>
 			</span>
 		</div>
-		<script>var hostUrl = "assets/";</script>
-
+        <script src="{{ asset('build/assets/plugins/global/plugins.bundle.js') }}"></script>
+		<script src="{{ asset('build/assets/js/scripts.bundle.js') }}"></script>
 		<script src="{{ asset('build/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 		<script src="{{ asset('build/assets/js/custom/widgets.js') }}"></script>
 	</body>

@@ -2,11 +2,18 @@
 
 namespace Modules\Settings\Http\Controllers;
 
+use App\Models\Permissions;
+use App\Models\User;
 use Artesaos\SEOTools\Facades\SEOMeta;
+use Auth;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
 
 class PermissionController extends Controller
@@ -17,24 +24,31 @@ class PermissionController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('can:read permission')->only('index');
+        $this->middleware('can:read_permission')->only('index');
     }
     public function index(Request $request)
     {
         SEOMeta::setTitle('Permission');
+        $role = Role::orderBy('name','asc')->get();
         if ($request->ajax()) {
             $data = Permission::latest();
             return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function($row){
-                $btn = '<button type="button" class="btn btn-sm btn-icon btn-active-light-primary"><i class="bi bi-pencil-square"></i></button>';
-                $btn .= '<button type="button" class="btn btn-sm btn-icon btn-active-light-danger"><i class="bi bi-trash"></i></button>';
+                $user = Auth::user();
+                $btn = '';
+                if ($user->hasPermissionTo('update_permission')) {
+                    $btn .= '<button type="button" class="btn btn-sm btn-icon btn-active-light-primary updateData" data-id="'.$row->id.'"><i class="bi bi-pencil-square"></i></button>';
+                }
+                if ($user->hasPermissionTo('delete_permission')) {
+                    $btn .= '<button type="button" class="btn btn-sm btn-icon btn-active-light-danger deleteData" data-id="'.$row->id.'"><i class="bi bi-trash"></i></button>';
+                }
                 return $btn;
             })
             ->rawColumns(['action'])
             ->make(true);
         }
-        return view('settings::permission.index');
+        return view('settings::permission.index')->with(['role'=>$role]);
     }
 
     /**
@@ -53,7 +67,33 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $role = $request->input('role');
+
+        $rule = [
+            'name'=>'required|unique:permissions',
+            'role'=>'required',
+        ];
+        $validator = Validator::make($request->all(),$rule);
+        if ($validator->passes()) {
+            Permission::updateOrCreate(['id',$request->id],[
+                'name' => $request->name,
+                'guard_name'=>'web'
+            ]); 
+            if (isset($request->id)) {
+                
+            }else{
+                $role = $request->input('role');
+                foreach ($role as $value) {
+                    $data_role = Role::find($value);
+                    $data_role->givePermissionTo($request->name);
+                }
+            }
+            
+            return Response::json(['result'=>true,'message'=>Lang::get('messages.success.new_data')]);
+
+        }else{
+            return Response::json(['result'=>false,'message'=>$validator->errors()]);
+        }
     }
 
     /**
@@ -73,7 +113,15 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        return view('settings::permission.edit');
+        $permission = Permission::find($id);
+        $roles = User::permission($permission->name)->get();
+        foreach ($roles as $key => $value) {
+            $item[] = [
+                'id' =>$value['roles'][0]['id'],
+                'name'=> $value['roles'][0]['name']
+            ]; 
+        }
+        return Response::json(['permission'=>$permission,'roles'=>$item]);
     }
 
     /**
