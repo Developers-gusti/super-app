@@ -75,15 +75,20 @@ class PermissionController extends Controller
         ];
         $validator = Validator::make($request->all(),$rule);
         if ($validator->passes()) {
-            Permission::create([
+            Permission::updateOrCreate(['id',$request->id],[
                 'name' => $request->name,
                 'guard_name'=>'web'
-            ]);
-            $role = $request->input('role');
-            foreach ($role as $value) {
-                $data_role = Role::find($value);
-                $data_role->givePermissionTo($request->name);
+            ]); 
+            if (isset($request->id)) {
+                
+            }else{
+                $role = $request->input('role');
+                foreach ($role as $value) {
+                    $data_role = Role::find($value);
+                    $data_role->givePermissionTo($request->name);
+                }
             }
+            
             return Response::json(['result'=>true,'message'=>Lang::get('messages.success.new_data')]);
 
         }else{
@@ -108,8 +113,15 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        $permission = Permissions::find($id);
-        return Response::json(['data'=>$permission]);
+        $permission = Permission::find($id);
+        $roles = User::permission($permission->name)->get();
+        foreach ($roles as $key => $value) {
+            $item[] = [
+                'id' =>$value['roles'][0]['id'],
+                'name'=> $value['roles'][0]['name']
+            ]; 
+        }
+        return Response::json(['permission'=>$permission,'roles'=>$item]);
     }
 
     /**

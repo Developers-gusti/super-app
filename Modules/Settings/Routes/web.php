@@ -15,7 +15,10 @@ use Modules\Settings\Http\Controllers\PermissionController;
 use Modules\Settings\Http\Controllers\RoleController;
 use Modules\Settings\Http\Controllers\SettingsController;
 use Modules\Settings\Http\Controllers\UserController;
-Route::prefix('{locale}')->where(['locale' => '[a-zA-Z]{2}'])->group(function () {
+// Route::prefix('{locale}')->where(['locale' => '[a-zA-Z]{2}'])->group(function () {
+
+// });
+
 Route::middleware(['auth:sanctum','prevent-back-history',config('jetstream.auth_session'),'verified'])->group(function () {
     Route::prefix('settings')->name('settings.')->group(function() {
         Route::get('/', [SettingsController::class,'index']);
@@ -28,5 +31,3 @@ Route::middleware(['auth:sanctum','prevent-back-history',config('jetstream.auth_
 
     });
 });
-});
-

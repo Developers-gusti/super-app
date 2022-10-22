@@ -79,7 +79,7 @@
                         <label class="mb-5" for="role">@lang('settings::label.permission.form.give_permission')<span class="text-danger">*</span></label>
                         @foreach ($role as $item)
                         <label class="form-check form-check-custom form-check-solid mb-3">
-                            <input class="form-check-input" type="checkbox" name="role[]" value="{{ $item->id }}"/>
+                            <input class="form-check-input roles" type="checkbox" name="role[]" id="{{ $item->name.$item->id }}" value="{{ $item->id }}"/>
                             <span class="form-check-label">
                                 {{ strtoupper($item->name) }}
                             </span>
@@ -134,11 +134,8 @@
                     ">"
         });
         $('#addButton').on('click', function(){
+            resetForm();
             $('.modal-title').html('@lang('settings::label.permission.form.create_permission')');
-            $('#name').removeClass('is-invalid');
-            $('#error-name').html('');
-            $('#error-role').html('');
-            $('#data-form').trigger('reset');
             $('#modalForm').modal('show');
         });
         $('#data-form').on('submit', function(event){
@@ -200,13 +197,27 @@
             })
         });
         $('body').on('click', '.updateData', function () {
-            var code = $(this).data('id');
-            $.get("{{ route('settings.permission.edit') }}" +'/' + code +'/edit', function (data) {
+            resetForm();
+            var id = $(this).data('id');
+            var url = '{{ route("settings.permission.edit", ":id") }}';
+            url = url.replace(':id', id );
+            $.get(url, function (data) {
                 $('.modal-title').html("@lang('settings::label.permission.form.create_permission')");
                 $('#modalForm').modal('show');
-                $('#name').val(data.name);
+                $('#id').val(data.permission.id);
+                $('#name').val(data.permission.name);
+                $.each(data.roles, function( index, value ) {
+                    $('#'+value.name+value.id).attr('checked',true);
+                });
             })
         });
     });
+    function resetForm(){
+        $('.roles').removeAttr('checked');
+        $('#name').removeClass('is-invalid');
+        $('#error-name').html('');
+        $('#error-role').html('');
+        $('#data-form').trigger('reset');
+    }
 </script>
 @endsection
