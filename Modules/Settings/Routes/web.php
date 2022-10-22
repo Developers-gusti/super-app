@@ -22,6 +22,10 @@ Route::middleware(['auth:sanctum','prevent-back-history',config('jetstream.auth_
         Route::get('/user',[UserController::class,'index'])->name('user');
         Route::get('/role',[RoleController::class,'index'])->name('role');
         Route::get('/permission',[PermissionController::class,'index'])->name('permission');
+        Route::post('/permission/store',[PermissionController::class,'store'])->name('permission.store');
+        Route::get('/permission/edit/{id}',[PermissionController::class,'edit'])->name('permission.edit');
+        Route::post('/permission/delete/{id}',[PermissionController::class,'destroy'])->name('permission.delete');
+
     });
 });
 });
