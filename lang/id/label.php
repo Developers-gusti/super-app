@@ -11,6 +11,7 @@ return [
     'new_user_registered' => 'Pengguna Baru telah melakukan Registrasi!',
     'switch_team' => 'Ganti Tim',
     'verify_email'  => 'Verifikasi Email',
+    'confirmation_delete'=>'Apa kamu yakin ingin menghapus data ?',
     'button' => [
         'save' => 'Simpan',
         'save_new' => 'Simpan dan Buat Baru',
@@ -23,6 +24,7 @@ return [
         'remove' => 'Hapus',
         'close' => 'Tutup',
         'process' => 'Diproses ...',
+        'continue' => 'Ya, Lanjutkan!',
         'filter' => 'Filter',
         'ok' => 'Ok',
         'change_email' => 'Ubah Email',

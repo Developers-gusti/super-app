@@ -10,6 +10,7 @@ return [
     'registration'  => 'Registration',
     'new_user_registered' => 'New User has registered!',
     'switch_team' => 'Switch Team',
+    'confirmation_delete'=>'Are you sure you want to delete the data ?',
     'button' => [
         'save' => 'Save',
         'save_new' => 'Save and Create New',
@@ -21,6 +22,7 @@ return [
         'delete' => 'Delete',
         'remove' => 'Remove',
         'close' => 'Close',
+        'continue' => 'Ya, Continue!',
         'process' => 'Prosesing ...',
         'filter' => 'Filter',
         'ok' => 'Ok',

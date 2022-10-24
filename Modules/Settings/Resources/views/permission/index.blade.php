@@ -198,6 +198,7 @@
         });
         $('body').on('click', '.updateData', function () {
             resetForm();
+            $('#name').attr('readonly',true);
             var id = $(this).data('id');
             var url = '{{ route("settings.permission.edit", ":id") }}';
             url = url.replace(':id', id );
@@ -211,9 +212,64 @@
                 });
             })
         });
+        $('body').on('click', '.deleteData', function () {
+            resetForm();
+            const id = $(this).data('id');
+            const name = $(this).data('name');
+            var url = '{{ route("settings.permission.delete", ":id") }}';
+            url = url.replace(':id', id );
+            Swal.fire({
+                title: "@lang('label.button.delete') : "+name,
+                text: "@lang('label.confirmation_delete')",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: "@lang('label.button.continue')",
+                cancelButtonText: "@lang('label.button.cancel')",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        method:'DELETE',
+                        url:url,
+                        data:{
+                            "id":id,
+                            "_token": "{{ csrf_token() }}",
+                        },
+                        dataType:'JSON',
+                        processData:true,
+                        success:function(res){
+                            Swal.fire({
+                                text:"@lang('messages.success.delete_data', ['title' => '"+name+"'])",
+                                icon:"success",
+                                buttonsStyling:!1,
+                                confirmButtonText:"@lang('label.button.ok')",
+                                customClass:{
+                                confirmButton:"btn btn-primary"
+                                }
+                            });
+                            datatable.draw();
+                        },
+                        error:function(xhr, status, error){
+                            var err = eval("(" + xhr.responseText + ")");
+                            Swal.fire({
+                                text:err.message,
+                                icon:"error",
+                                buttonsStyling:!1,
+                                confirmButtonText:"@lang('label.button.ok')",
+                                customClass:{
+                                    confirmButton:"btn btn-primary"
+                                }
+                            });
+                        }
+                    })
+                }
+            })
+        });
     });
     function resetForm(){
         $('.roles').removeAttr('checked');
+        $('#name').attr('readonly',false);
         $('#name').removeClass('is-invalid');
         $('#error-name').html('');
         $('#error-role').html('');
