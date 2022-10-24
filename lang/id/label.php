@@ -12,6 +12,7 @@ return [
     'switch_team' => 'Ganti Tim',
     'verify_email'  => 'Verifikasi Email',
     'confirmation_delete'=>'Apa kamu yakin ingin menghapus data ?',
+    'created_at'=>'Dibuat Pada',
     'button' => [
         'save' => 'Simpan',
         'save_new' => 'Simpan dan Buat Baru',
@@ -48,5 +49,9 @@ return [
         'user'              => 'Pengguna',
         'role'              => 'Persan',
         'permission'        => 'Ijin Akses',
+        'my_profile'        => 'Profile Saya',
+        'language'          => 'Bahasa',
+        'signout'           => 'Keluar'
+
     ]
 ];

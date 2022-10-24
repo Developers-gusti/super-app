@@ -11,6 +11,7 @@ return [
     'new_user_registered' => 'New User has registered!',
     'switch_team' => 'Switch Team',
     'confirmation_delete'=>'Are you sure you want to delete the data ?',
+    'created_at'=>'Created At',
     'button' => [
         'save' => 'Save',
         'save_new' => 'Save and Create New',
@@ -48,5 +49,9 @@ return [
         'user'              => 'User',
         'role'              => 'Role',
         'permission'        => 'Permission',
+        'my_profile'        => 'My Profile',
+        'language'          => 'Bahasa',
+        'signout'           => 'Sign Out'
+
     ]
 ];

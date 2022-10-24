@@ -40,7 +40,7 @@
                         </div>
                     </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <button type="button" id="modalLaunch" class="btn btn-sm btn-primary"><i class="bi bi-person-plus-fill mr-2"></i> Buat User Baru</button>
+                    <button type="button" id="addButton" class="btn btn-sm btn-primary"><i class="bi bi-person-plus-fill mr-2"></i> Buat User Baru</button>
 
                 </div>
             </div>
@@ -75,27 +75,43 @@
         </div>
     </div>
 </div>
-<div class="modal fade" tabindex="-1" id="kt_modal_1">
-    <div class="modal-dialog">
+<div class="modal fade" id="modalForm" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
 
-                <!--begin::Close-->
-                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                    <span class="svg-icon svg-icon-2x"></span>
                 </div>
-                <!--end::Close-->
             </div>
-
+            <form id="data-form">
             <div class="modal-body">
-                <p>Modal body text goes here.</p>
-            </div>
+                    @csrf
+                    <input type="hidden" name="id" id="id">
+                    <div class="form-group mb-7 ">
+                        <label for="name">@lang('settings::label.permission.table.name')<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="Ex: function_menu">
+                        <div class="fv-plugins-message-container invalid-feedback" id="error-name"></div>
+                    </div>
+                    <div class="form-grou mb-7">
+                        <label class="mb-5" for="role">@lang('settings::label.permission.form.give_permission')<span class="text-danger">*</span></label>
+                        @foreach ($role as $item)
+                        <label class="form-check form-check-custom form-check-solid mb-3">
+                            <input class="form-check-input roles" type="checkbox" name="role[]" id="{{ $item->name.$item->id }}" value="{{ $item->id }}"/>
+                            <span class="form-check-label">
+                                {{ strtoupper($item->name) }}
+                            </span>
+                        </label>
+                        @endforeach
+                        <div class="fv-plugins-message-container invalid-feedback" id="error-role"></div>
+                    </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-bs-dismiss="modal">@lang('label.button.close')</button>
+                <button type="submit" id="saveButton" class="btn btn-success font-weight-bold">@lang('label.button.save')</button>
+            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -136,8 +152,9 @@
              ">"
            });
 
-        $('#modalLaunch').on('click',function(){
-            alert('wefwef');
+           $('#addButton').on('click', function(){
+            $('.modal-title').html('@lang('settings::label.user.form.create_user')');
+            $('#modalForm').modal('show');
         });
     })
 </script>

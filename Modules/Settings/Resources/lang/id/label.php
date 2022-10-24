@@ -14,6 +14,15 @@ return [
             'permission_name'=>'Nama Ijin Akses',
             'give_permission'=>'Berikan ijin akses kepada',
         ]
+    ],
+    'user'=>[
+        'create_user'=>'Buat Pengguna',
+        'edit_user'=>'Edit Pengguna',
+        'name_user'=>'Nama Pengguna',
+        'email'=>'Email',
+        'role'=>'Peran',
+        'office'=>'Kantor',
+        'no'=>'No',
     ]
 ];
 ?>

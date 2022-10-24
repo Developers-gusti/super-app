@@ -152,7 +152,7 @@ class PermissionController extends Controller
     public function destroy($id)
     {
         $permission  = Permission::find($id);
-        $role = Role::all()->pluck('name')->toArray();
+        $role = Role::all()->pluck('name');
         foreach ($role as $value) {
             $permission->removeRole($value);
         }

@@ -7,6 +7,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Artesaos\SEOTools\Facades\SEOMeta;
+use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
@@ -22,6 +23,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         SEOMeta::setTitle('User');
+        $role = Role::all();
         if ($request->ajax()) {
             $data = User::latest();
             return DataTables::of($data)
@@ -35,7 +37,7 @@ class UserController extends Controller
             ->make(true);
 
         }
-        return view('settings::user.index');
+        return view('settings::user.index')->with(['role'=>$role]);
     }
 
     /**
