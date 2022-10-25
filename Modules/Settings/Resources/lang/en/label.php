@@ -20,11 +20,6 @@ return [
     'user'=>[
         'create_user'=>'Create New User',
         'edit_user'=>'Edit User',
-        'name_user'=>'User Name',
-        'email'=>'Email',
-        'role'=>'Role',
-        'office'=>'Office',
-        'no'=>'No',
     ]
 ];
 ?>

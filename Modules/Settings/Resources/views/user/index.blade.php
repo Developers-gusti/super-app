@@ -49,13 +49,14 @@
                         <table id="kt_datatable_example_5" class="table table-row-bordered gy-3 gs-2 border rounded">
                             <thead class="fs-8">
                                 <tr class="fw-bolder text-gray-800 px-7">
-                                    <th width="15%"></th>
-                                    <th>No.</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
+                                    
+                                    <th>@lang('label.no')</th>
+                                    <th>@lang('label.username')</th>
+                                    <th>@lang('label.email')</th>
+                                    <th>@lang('label.action')</th>
                                 </tr>
                             </thead>
-                            <tbody class="fs-8" style="vertical-align: middle;"
+                            <tbody class="fs-8" style="vertical-align: middle;">
 
                             </tbody>
                         </table>
@@ -79,21 +80,34 @@
                     @csrf
                     <input type="hidden" name="id" id="id">
                     <div class="form-group mb-7 ">
-                        <label for="name">@lang('settings::label.user.')<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="Ex: function_menu">
+                        <label for="name">@lang('label.username')<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control form-control-sm" id="name" name="name">
                         <div class="fv-plugins-message-container invalid-feedback" id="error-name"></div>
                     </div>
+                    <div class="form-group mb-7 ">
+                        <label for="email">@lang('label.email')<span class="text-danger">*</span></label>
+                        <input type="email" class="form-control form-control-sm" id="email" name="email">
+                        <div class="fv-plugins-message-container invalid-feedback" id="error-email"></div>
+                    </div>
                     <div class="form-grou mb-7">
-                        <label class="mb-5" for="role">@lang('settings::label.permission.form.give_permission')<span class="text-danger">*</span></label>
-                        @foreach ($role as $item)
-                        <label class="form-check form-check-custom form-check-solid mb-3">
-                            <input class="form-check-input roles" type="checkbox" name="role[]" id="{{ $item->name.$item->id }}" value="{{ $item->id }}"/>
-                            <span class="form-check-label">
-                                {{ strtoupper($item->name) }}
-                            </span>
-                        </label>
-                        @endforeach
+                        <label class="mb-5" for="role">@lang('label.role')<span class="text-danger">*</span></label>
+                        <select class="form-select form-select-sm" data-placeholder="Select an option" id="mySelect2">
+                            <option></option>
+                            @foreach ($role as $item)
+                            <option value="{{ $item->id }}">{{ strtoupper($item->name) }}</option>
+                            @endforeach
+                        </select>
                         <div class="fv-plugins-message-container invalid-feedback" id="error-role"></div>
+                    </div>
+                    <div class="form-group mb-7 ">
+                        <label for="password">@lang('label.password')<span class="text-danger">*</span></label>
+                        <input type="password" class="form-control form-control-sm" id="password" name="passsword" maxlength="12" minlength="6">
+                        <div class="fv-plugins-message-container invalid-feedback" id="error-password"></div>
+                    </div>
+                    <div class="form-group mb-7 ">
+                        <label for="password_confirmation">@lang('label.password_confirmation')<span class="text-danger">*</span></label>
+                        <input type="password" class="form-control form-control-sm" id="password_confirmation" name="password_confirmation" maxlength="12" minlength="6">
+                        <div class="fv-plugins-message-container invalid-feedback" id="error-password_confirmation"></div>
                     </div>
 
             </div>
@@ -107,6 +121,9 @@
 </div>
 <script>
     $(document).ready(function () {
+        $('#mySelect2').select2({
+            dropdownParent: $('#modalForm')
+        });
         var table = $("#kt_datatable_example_5").DataTable({
             ajax:{
                 url:"{{ route('settings.user') }}",
@@ -115,7 +132,6 @@
                 }
             },
             columns: [
-                {data: 'action', name: 'action'},
                 {
                     "data":null, "sortable":false, "orderable":false,
                     render: function(data, type, row, meta){
@@ -124,6 +140,7 @@
                 },
                 {data: 'name', name: 'name'},
                 {data: 'email', name: 'email'},
+                {data: 'action', name: 'action'},
             ],
             language: {
              "lengthMenu": "Show _MENU_",
