@@ -94,7 +94,7 @@
                         <select class="form-select form-select-sm" data-placeholder="Select an option" id="mySelect2">
                             <option></option>
                             @foreach ($role as $item)
-                            <option value="{{ $item->id }}">{{ strtoupper($item->name) }}</option>
+                            <option value="{{ $item->name }}">{{ strtoupper($item->name) }}</option>
                             @endforeach
                         </select>
                         <div class="fv-plugins-message-container invalid-feedback" id="error-role"></div>
