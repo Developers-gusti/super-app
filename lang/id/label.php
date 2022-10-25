@@ -13,6 +13,7 @@ return [
     'verify_email'  => 'Verifikasi Email',
     'confirmation_delete'=>'Apa kamu yakin ingin menghapus data ?',
     'created_at'=>'Dibuat Pada',
+    'action'=>'Aksi',
     'button' => [
         'save' => 'Simpan',
         'save_new' => 'Simpan dan Buat Baru',
@@ -45,6 +46,8 @@ return [
         'sign_out'          => 'Keluar',
         'account_settings'  => 'Pengaturan Akun',
         'dashboard'         => 'Beranda',
+        'masterdata'        => 'Data Master',
+        'office'            => 'Kantor',
         'settings'          => 'Pengaturan',
         'user'              => 'Pengguna',
         'role'              => 'Persan',

@@ -1,5 +1,6 @@
 {
     "ManageUser": true,
     "MasterData": true,
-    "Settings": true
+    "Settings": true,
+    "Office": true
 }

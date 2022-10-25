@@ -12,6 +12,7 @@ return [
     'switch_team' => 'Switch Team',
     'confirmation_delete'=>'Are you sure you want to delete the data ?',
     'created_at'=>'Created At',
+    'action'=>'Action',
     'button' => [
         'save' => 'Save',
         'save_new' => 'Save and Create New',
@@ -45,6 +46,8 @@ return [
         'sign_out'          => 'Sign Out',
         'account_settings'  => 'Account Settings',
         'dashboard'         => 'Dashboard',
+        'masterdata'        => 'Master Data',
+        'office'            => 'Office',
         'settings'          => 'Settings',
         'user'              => 'User',
         'role'              => 'Role',
