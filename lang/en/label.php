@@ -5,11 +5,17 @@ return [
     'username' => 'Username',
     'email' => 'Email',
     'password' => 'Password',
+    'password_confirmation' => 'Password Confirmation',
     'dashboard' => 'Dashboard',
+    'role' => 'Role',
     'request_role' => 'Request Change Role',
     'registration'  => 'Registration',
     'new_user_registered' => 'New User has registered!',
     'switch_team' => 'Switch Team',
+    'confirmation_delete'=>'Are you sure you want to delete the data ?',
+    'no'=>'No',
+    'created_at'=>'Created At',
+    'action'=>'Action',
     'button' => [
         'save' => 'Save',
         'save_new' => 'Save and Create New',
@@ -21,6 +27,7 @@ return [
         'delete' => 'Delete',
         'remove' => 'Remove',
         'close' => 'Close',
+        'continue' => 'Ya, Continue!',
         'process' => 'Prosesing ...',
         'filter' => 'Filter',
         'ok' => 'Ok',
@@ -42,9 +49,15 @@ return [
         'sign_out'          => 'Sign Out',
         'account_settings'  => 'Account Settings',
         'dashboard'         => 'Dashboard',
+        'masterdata'        => 'Master Data',
+        'office'            => 'Office',
         'settings'          => 'Settings',
         'user'              => 'User',
         'role'              => 'Role',
         'permission'        => 'Permission',
+        'my_profile'        => 'My Profile',
+        'language'          => 'Bahasa',
+        'signout'           => 'Sign Out'
+
     ]
 ];

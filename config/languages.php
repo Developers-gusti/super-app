@@ -2,11 +2,11 @@
 return [
     'en' => [
         'name'=>'English',
-        'flag'=>'flag-icon-en'
+        'flag'=>'united-states'
     ],
     'id' =>  [
         'name'=>'Indonesia',
-        'flag'=>'flag-icon-id'
+        'flag'=>'indonesia'
     ],
 ]
 ?>

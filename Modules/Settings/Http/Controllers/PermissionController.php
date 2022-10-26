@@ -41,7 +41,7 @@ class PermissionController extends Controller
                     $btn .= '<button type="button" class="btn btn-sm btn-icon btn-active-light-primary updateData" data-id="'.$row->id.'"><i class="bi bi-pencil-square"></i></button>';
                 }
                 if ($user->hasPermissionTo('delete_permission')) {
-                    $btn .= '<button type="button" class="btn btn-sm btn-icon btn-active-light-danger deleteData" data-id="'.$row->id.'"><i class="bi bi-trash"></i></button>';
+                    $btn .= '<button type="button" class="btn btn-sm btn-icon btn-active-light-danger deleteData" data-id="'.$row->id.'" data-name="'.$row->name.'"><i class="bi bi-trash"></i></button>';
                 }
                 return $btn;
             })
@@ -67,30 +67,39 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        $role = $request->input('role');
+        if (isset($request->id)) {
+            $rule = [
+                'role'=>'required',
+            ];
+            $message = Lang::get('messages.success.edit_data',['title'=>$request->name]);
+        }else{
+            $rule = [
+                'name'=>'required|unique:permissions',
+                'role'=>'required',
+            ];
+            $message = Lang::get('messages.success.new_data');
+        }
 
-        $rule = [
-            'name'=>'required|unique:permissions',
-            'role'=>'required',
-        ];
         $validator = Validator::make($request->all(),$rule);
         if ($validator->passes()) {
-            Permission::updateOrCreate(['id',$request->id],[
+            $permission = Permission::updateOrCreate(['id'=>$request->id],[
                 'name' => $request->name,
                 'guard_name'=>'web'
-            ]); 
-            if (isset($request->id)) {
-                
-            }else{
-                $role = $request->input('role');
-                foreach ($role as $value) {
-                    $data_role = Role::find($value);
-                    $data_role->givePermissionTo($request->name);
+            ]);
+            $role = $request->input('role');
+            foreach ($role as $value) {
+                $data_role = Role::find($value);
+                $data_role->givePermissionTo($request->name);
+                if (isset($request->id)) {
+                    $all_roles_except_value = Role::whereNotIn('id', $role)->get()->pluck('name')->toArray();
+                    if (count($all_roles_except_value) != 0) {
+                        foreach ($all_roles_except_value as $rolename) {
+                            $permission->removeRole($rolename);
+                        }
+                    }
                 }
             }
-            
-            return Response::json(['result'=>true,'message'=>Lang::get('messages.success.new_data')]);
-
+            return Response::json(['result'=>true,'message'=>$message]);
         }else{
             return Response::json(['result'=>false,'message'=>$validator->errors()]);
         }
@@ -119,7 +128,7 @@ class PermissionController extends Controller
             $item[] = [
                 'id' =>$value['roles'][0]['id'],
                 'name'=> $value['roles'][0]['name']
-            ]; 
+            ];
         }
         return Response::json(['permission'=>$permission,'roles'=>$item]);
     }
@@ -142,6 +151,12 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $permission  = Permission::find($id);
+        $role = Role::all()->pluck('name');
+        foreach ($role as $value) {
+            $permission->removeRole($value);
+        }
+        $permission->delete();
+        return Response::json();
     }
 }

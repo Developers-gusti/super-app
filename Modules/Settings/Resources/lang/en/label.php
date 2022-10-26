@@ -1,6 +1,7 @@
 <?php
 return [
-    'create_new_permission'=>'Creare New Permission',
+    'create_new_permission'=>'Create New Permission',
+    'create_new_user'=>'Create New Permission',
     'permission' => [
         'table'=>[
             'no'=>'No',
@@ -15,6 +16,10 @@ return [
             'permission_name'=>'Permission Name',
             'give_permission'=>'Give Permission To',
         ]
+    ],
+    'user'=>[
+        'create_user'=>'Create New User',
+        'edit_user'=>'Edit User',
     ]
 ];
 ?>

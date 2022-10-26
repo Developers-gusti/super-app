@@ -7,6 +7,11 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Artesaos\SEOTools\Facades\SEOMeta;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
+use Str;
 use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
@@ -22,6 +27,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         SEOMeta::setTitle('User');
+        $role = Role::all();
         if ($request->ajax()) {
             $data = User::latest();
             return DataTables::of($data)
@@ -35,16 +41,23 @@ class UserController extends Controller
             ->make(true);
 
         }
-        return view('settings::user.index');
+        return view('settings::user.index')->with(['role'=>$role]);
     }
 
     /**
      * Show the form for creating a new resource.
      * @return Renderable
      */
-    public function create()
+    public function create($request)
     {
-        return view('settings::create');
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'remember_token'=>Str::random(16)
+        ]);
+        $user->assignRole($request->role);
+        return true;
     }
 
     /**
@@ -54,7 +67,23 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rule = $this->_validation($request->all());
+        $validator = Validator::make($request->all(),$rule);
+        if ($validator->passes()) {
+            if (!isset($request->id) && isset($request->password) ) {
+                $this->create($request->all());
+            } else if (isset($request->id) && !isset($request->password) ) {
+               $this->update($request->id,$request->all());
+            } else if (isset($request->id) && isset($request->password) ) {
+                $rule = [
+                    'email'=>'required|email',
+                    'password'=>'required|min:6|max:12|password_confirmation',
+                ];
+            }
+            return Response::json(['result' => true, 'message' => 'Success'], 200);
+        }else{
+            return Response::json(['result' => false, 'errors' => $validator->errors()],422);
+        }
     }
 
     /**
@@ -85,7 +114,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id)->update([
+            'name' => $request->name,
+        ]);
+        $user->syncRoles($request->role);
+        return true;
     }
 
     /**
@@ -96,5 +129,40 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function changePassoword(Request $request,$id)
+    {
+        $user = User::find($id)->update([
+            'password' => Hash::make($request->password)
+        ]);
+        return true;
+    }
+    public function _validation($request) 
+    {
+        //insert new data
+        if (!isset($request->id) && isset($request->password) ) {
+            $rule = [
+                'name'=>'required',
+                'email'=>'required|email|unique:users',
+                'password'=>'required|min:6|max:12|password_confirmation',
+                'role'=>'required',
+            ];
+        }
+        //Update Data
+        if (isset($request->id) && !isset($request->password) ) {
+            $rule = [
+                'name'=>'required',
+                'email'=>'required|email',
+                'role'=>'required',
+            ];
+        }
+        //Change Password
+        if (isset($request->id) && isset($request->password) ) {
+            $rule = [
+                'email'=>'required|email',
+                'password'=>'required|min:6|max:12|password_confirmation',
+            ];
+        }
+        return $rule;  
     }
 }
