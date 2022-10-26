@@ -28,7 +28,7 @@
             <!--begin::Navbar-->
             <div class="d-flex align-items-stretch" id="kt_header_nav">
                 <!--begin::Menu wrapper-->
-              
+
                 <!--end::Menu wrapper-->
             </div>
             <!--end::Navbar-->
@@ -46,9 +46,8 @@
                         <div class="menu-item px-3">
                             <div class="menu-content d-flex align-items-center px-3">
                                 <!--begin::Avatar-->
-                                <div class="symbol symbol-50px me-5">
-                                    <i class="bi bi-person-badge-fill" style="font-size: 2em;"></i>
-                                </div>
+                                {{-- <div class="symbol symbol-50px me-5">
+                                </div> --}}
                                 <!--end::Avatar-->
                                 <!--begin::Username-->
                                 <div class="d-flex flex-column">
@@ -65,17 +64,20 @@
                         <!--end::Menu separator-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
-                            <a href="../../demo1/dist/account/overview.html" class="menu-link px-5">My Profile</a>
+                            <a href="../../demo1/dist/account/overview.html" class="menu-link px-5">
+                                <span class="bi bi-person-badge-fill me-4" ></span>
+                                @lang('label.menu.my_profile')</a>
                         </div>
                         <!--end::Menu item-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-5" data-kt-menu-trigger="hover" data-kt-menu-placement="left-start">
                             <a href="#" class="menu-link px-5">
-                                <span class="menu-title position-relative">Language
+                                <span class="bi bi-translate me-4"></span>
+                                <span class="menu-title position-relative">@lang('label.menu.language')
                                 @foreach (Config::get('languages') as $lang =>$language)
                                 @if ($lang == App::getLocale())
-                                <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">{{ $language['name']}}
-                                    <span class="flag-icons flag-icons-gr flag-icons-squared"></span></span>
+                                <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">{{ $language['name'] }}
+                                    <img class="w-15px h-15px rounded-1 ms-2" src="{{ asset('build/assets/media/flags/'.$language['flag'].'.svg') }}" alt=""></span>
                                 @endif
                                 @endforeach
                             </span>
@@ -85,7 +87,9 @@
                                 @foreach (Config::get('languages') as $lang =>$language)
                                 <div class="menu-item px-3">
                                     <a href="{{ route('swich.lang',$lang) }}" class="menu-link d-flex px-5 @if ($lang == App::getLocale()) active  @endif">
-                                    <span class="symbol symbol-20px me-4 flag-icon  {{ $language['flag']  }} "></span>{{ $language['name'] }}</a>
+                                        <span class="symbol symbol-20px me-4">
+                                            <img class="rounded-1" src="{{ asset('build/assets/media/flags/'.$language['flag'].'.svg') }}" alt="">
+                                        </span>{{ $language['name'] }}</a>
                                 </div>
                                 @endforeach
                             </div>
@@ -94,11 +98,12 @@
                         <!--end::Menu item-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
-                            <a href="{{ route('logout') }}"  class="menu-link px-5"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <a href="{{ route('logout') }}"  class="menu-link px-5 btn-active-icon-primary"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf
                                 </form>
-                                {{ __('Sign Out') }}
+                                <span class="bi bi-box-arrow-right me-4"></span>
+                                @lang('label.menu.sign_out')
                             </a>
                         </div>
                         <!--end::Menu item-->
