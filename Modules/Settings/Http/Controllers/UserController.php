@@ -7,9 +7,11 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Artesaos\SEOTools\Facades\SEOMeta;
+use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
+use Lang;
 use Spatie\Permission\Models\Role;
 use Str;
 use Yajra\DataTables\Facades\DataTables;
@@ -23,6 +25,9 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('can:read_user')->only('index');
+        $this->middleware('can:create_user')->only(['create', 'store']);
+        $this->middleware('can:update_user')->only(['update', 'store','changePassoword']);
+        $this->middleware('can:delete_user')->only(['destroy']);
     }
     public function index(Request $request)
     {
@@ -75,10 +80,7 @@ class UserController extends Controller
             } else if (isset($request->id) && !isset($request->password) ) {
                $this->update($request->id,$request->all());
             } else if (isset($request->id) && isset($request->password) ) {
-                $rule = [
-                    'email'=>'required|email',
-                    'password'=>'required|min:6|max:12|password_confirmation',
-                ];
+               $this->changePassoword($request->id,$request->password);
             }
             return Response::json(['result' => true, 'message' => 'Success'], 200);
         }else{
@@ -128,16 +130,34 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
-    public function changePassoword(Request $request,$id)
+    public function changePassoword($id,$password)
     {
-        $user = User::find($id)->update([
-            'password' => Hash::make($request->password)
+        User::find($id)->update([
+            'password' => Hash::make($password)
         ]);
         return true;
     }
-    public function _validation($request) 
+    public function updateProfile(Request $request)
+    {
+        $rule = [
+            'name'=>'required',
+            'email'=>'required|email',
+            'role'=>'required',
+        ];
+        $validator = Validator::make($request->all(),$rule);
+        if ($validator->passes()) {
+            User::find(auth()->user()->id)->update([
+                'name' => $request->name,
+            ]);
+           return Response::json(['result'=>true,'message'=>Lang::get('messages.success.edit_data',['title'=>Lang::get('label.username')])],200);
+        }else{
+            return Response::json(['result' => false,'message' => $validator->errors()],200);
+        }
+
+    }
+    public function _validation($request)
     {
         //insert new data
         if (!isset($request->id) && isset($request->password) ) {
@@ -163,6 +183,28 @@ class UserController extends Controller
                 'password'=>'required|min:6|max:12|password_confirmation',
             ];
         }
-        return $rule;  
+        return $rule;
+    }
+    public function profile()
+    {
+       return view('layouts.profile');
+    }
+    public function selfChangePassword(Request $request)
+    {
+        $rule = [
+            'current_password'=>'required|min:6|max:12',
+            'password'=>'required|min:6|max:12|confirmed'
+        ];
+        $validator = Validator::make($request->all(),$rule);
+        if($validator->passes()){
+            if(!Hash::check($request->current_password,auth()->user()->password)){
+                return Response::json(['result' => false,'message' =>['current_password'=>[Lang::get('validation.current_password')]]],200);
+            }else{
+                $this->changePassoword(auth()->user()->id,$request->password);
+            }
+            return Response::json(['result'=>true,'message'=>Lang::get('messages.success.edit_data',['title'=>Lang::get('label.password')])],200);
+        }else{
+            return Response::json(['result' => false,'message' => $validator->errors()],200);
+        }
     }
 }

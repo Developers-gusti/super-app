@@ -3,9 +3,14 @@
 return [
     'notification' => 'Notifikasi',
     'username' => 'Nama Pengguna',
+    'user_information' => 'Informasi Pengguna',
     'email' => 'Surel',
     'password' => 'Kata Sandi',
     'password_confirmation' => 'Konfirmasi Kata Sandi',
+    'change_password' => 'Ganti Kata Sandi',
+    'current_password' => 'Kata Sandi Saat Ini',
+    'new_password' => 'Kata Sandi Baru',
+    'new_password_confirmation' => 'Konfirmasi Kata Sandi Baru',
     'dashboard' => 'Beranda',
     'role' => 'Peran',
     'request_role' => 'Permintaan Ubah Hak Akses',
@@ -19,6 +24,7 @@ return [
     'action'=>'Aksi',
     'button' => [
         'save' => 'Simpan',
+        'update' => 'Perbarui',
         'save_new' => 'Simpan dan Buat Baru',
         'create_new' => 'Buat Baru',
         'cancel' => 'Batal',

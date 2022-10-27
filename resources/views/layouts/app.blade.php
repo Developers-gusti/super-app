@@ -91,8 +91,8 @@
 		<script src="{{ asset('build/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 		<!--end::Page Vendors Javascript-->
 		<!--begin::Page Custom Javascript(used by this page)-->
-		<script src="{{ asset('build/assets/js/widgets.bundle.js') }}}}"></script>
-		<script src="{{ asset('build/assets/js/custom/widgets.js') }}}"></script>
+		{{-- <script src="{{ asset('build/assets/js/widgets.bundle.js') }}}}"></script>
+		<script src="{{ asset('build/assets/js/custom/widgets.js') }}}"></script> --}}
 
 		<!--end::Page Custom Javascript-->
 		<!--end::Javascript-->
