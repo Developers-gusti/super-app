@@ -39,7 +39,9 @@ class UserController extends Controller
             ->addIndexColumn()
             ->addColumn('action', function($row){
                 $btn = '<button type="button" class="btn btn-sm btn-icon btn-active-light-primary editData"  data-id="'.$row->id.'"><i class="bi bi-pencil-square"></i></button>';
+                $btn .= '<button type="button" class="btn btn-sm btn-icon btn-active-light-warning changePassword" data-id="'.$row->id.'" data-email="'.$row->email.'"><i class="bi bi-key-fill"></i></button>';
                 $btn .= '<button type="button" class="btn btn-sm btn-icon btn-active-light-danger deleteData" data-id="'.$row->id.'" data-name="'.$row->name.'"><i class="bi bi-trash"></i></button>';
+
                 return $btn;
             })
             ->rawColumns(['action'])
@@ -83,7 +85,7 @@ class UserController extends Controller
                $message = Lang::get('messages.success.edit_data',['title'=>Lang::get('label.menu.user').' '.$request->name]);
             } else if (isset($request->id) && isset($request->password) ) {
                $this->changePassoword($request->id,$request->password);
-               $message = Lang::get('messages.notification.new_user',['attribute'=>$request->name]);
+               $message = Lang::get('messages.success.edit_data',['title'=>Lang::get('label.password').' '.$request->email]);
 
             }
             return Response::json(['result' => true, 'message' => $message], 200);
@@ -149,11 +151,7 @@ class UserController extends Controller
     }
     public function updateProfile(Request $request)
     {
-        $rule = [
-            'name'=>'required',
-            'email'=>'required|email',
-            'role'=>'required',
-        ];
+        $rule = $this->_validation($request->all());
         $validator = Validator::make($request->all(),$rule);
         if ($validator->passes()) {
             User::find(auth()->user()->id)->update([

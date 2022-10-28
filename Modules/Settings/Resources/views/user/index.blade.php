@@ -78,16 +78,16 @@
             <div class="modal-body">
                 @csrf
                 <input type="hidden" name="id" id="id">
+                <div class="form-group mb-7 ">
+                    <label for="email">@lang('label.email')<span class="text-danger">*</span></label>
+                    <input type="email" class="form-control form-control-sm" id="email" name="email">
+                    <div class="fv-plugins-message-container invalid-feedback" id="error-email"></div>
+                </div>
                 <div id="user-section">
                     <div class="form-group mb-7 ">
                         <label for="name">@lang('label.username')<span class="text-danger">*</span></label>
                         <input type="text" class="form-control form-control-sm" id="name" name="name">
                         <div class="fv-plugins-message-container invalid-feedback" id="error-name"></div>
-                    </div>
-                    <div class="form-group mb-7 ">
-                        <label for="email">@lang('label.email')<span class="text-danger">*</span></label>
-                        <input type="email" class="form-control form-control-sm" id="email" name="email">
-                        <div class="fv-plugins-message-container invalid-feedback" id="error-email"></div>
                     </div>
                     <div class="form-group mb-7">
                         <label for="" class="form-label">@lang('label.role')</label>
@@ -191,6 +191,20 @@
                 $('#role').trigger('change');
 
             })
+        });
+        $('body').on('click', '.changePassword', function () {
+            cleanError();
+            $('#email').attr('readonly',true);
+            $('#email').addClass('form-control-solid');
+            var id = $(this).data('id');
+            var email = $(this).data('email');
+            $('#password-section').show();
+            $('#user-section').hide();
+            $('.modal-title').html("@lang('settings::label.user.edit_user')");
+            $('#modalForm').modal('show');
+            $('#id').val(id);
+            $('#email').val(email);
+
         });
         $('body').on('click', '.deleteData', function () {
             cleanError();
