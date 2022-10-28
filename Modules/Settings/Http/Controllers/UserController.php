@@ -137,7 +137,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-
+        User::find($id)->delete();
+        return Response::json(['result'=>true]);
     }
     public function changePassoword($id,$password)
     {

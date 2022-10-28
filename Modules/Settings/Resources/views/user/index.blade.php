@@ -192,6 +192,52 @@
 
             })
         });
+        $('body').on('click', '.deleteData', function () {
+            cleanError();
+            const id = $(this).data('id');
+            const name = $(this).data('name');
+            var url = '{{ route("settings.user.delete", ":id") }}';
+            url = url.replace(':id', id );
+            Swal.fire({
+                title: "@lang('label.button.delete') : "+name,
+                text: "@lang('label.confirmation_delete')",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: "@lang('label.button.continue')",
+                cancelButtonText: "@lang('label.button.cancel')",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        method:'DELETE',
+                        url:url,
+                        data:{
+                            "id":id,
+                            "_token": "{{ csrf_token() }}",
+                        },
+                        dataType:'JSON',
+                        processData:true,
+                        success:function(res){
+                            Swal.fire({
+                                text:"@lang('messages.success.delete_data', ['title' => '"+name+"'])",
+                                icon:"success",
+                                buttonsStyling:!1,
+                                confirmButtonText:"@lang('label.button.ok')",
+                                customClass:{
+                                confirmButton:"btn btn-primary"
+                                }
+                            });
+                            datatable.draw();
+                        },
+                        error:function(xhr, status, error){
+                            var err = eval("(" + xhr.responseText + ")");
+                            _error(err.message);
+                        }
+                    })
+                }
+            })
+        });
         $('#data-form').submit(function (e) {
             e.preventDefault();
             $.ajax({

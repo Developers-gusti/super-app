@@ -25,6 +25,7 @@ Route::middleware(['auth:sanctum','prevent-back-history',config('jetstream.auth_
         Route::get('/user',[UserController::class,'index'])->name('user');
         Route::post('/user/store',[UserController::class,'store'])->name('user.store');
         Route::get('/user/edit/{id}',[UserController::class,'edit'])->name('user.edit');
+        Route::delete('/user/delete/{id}',[UserController::class,'destroy'])->name('user.delete');
         Route::get('/role',[RoleController::class,'index'])->name('role');
         Route::get('/profile',[UserController::class,'profile'])->name('profile');
         Route::post('/profile/update',[UserController::class,'updateProfile'])->name('profile.update');
