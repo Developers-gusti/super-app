@@ -23,11 +23,13 @@ Route::middleware(['auth:sanctum','prevent-back-history',config('jetstream.auth_
     Route::prefix('settings')->name('settings.')->group(function() {
         Route::get('/', [SettingsController::class,'index']);
         Route::get('/user',[UserController::class,'index'])->name('user');
+        Route::post('/user/store',[UserController::class,'store'])->name('user.store');
+        Route::post('/user/edit/{1}',[UserController::class,'store'])->name('user.store');
         Route::get('/role',[RoleController::class,'index'])->name('role');
-        Route::get('/permission',[PermissionController::class,'index'])->name('permission');
         Route::get('/profile',[UserController::class,'profile'])->name('profile');
         Route::post('/profile/update',[UserController::class,'updateProfile'])->name('profile.update');
         Route::post('/profile/change_password',[UserController::class,'selfChangePassword'])->name('profile.change.password');
+        Route::get('/permission',[PermissionController::class,'index'])->name('permission');
         Route::post('/permission/store',[PermissionController::class,'store'])->name('permission.store');
         Route::get('/permission/edit/{id}',[PermissionController::class,'edit'])->name('permission.edit');
         Route::delete('/permission/delete/{id}',[PermissionController::class,'destroy'])->name('permission.delete');

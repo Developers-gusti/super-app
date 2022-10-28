@@ -23,7 +23,7 @@
                 <!--begin::Menu toggle-->
                 <a href="#" class="btn btn-sm btn-flex btn-light btn-active-primary fw-bolder" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"><i class="bi bi-funnel-fill"></i> Filter</a>
                 <!--end::Menu toggle-->
-               
+
             </div>
             <!--end::Filter menu-->
             <!--begin::Secondary button-->
@@ -48,8 +48,7 @@
                         <table id="kt_datatable_example_5" class="table table-row-bordered gy-2 gs-5 border rounded">
                             <thead class="fs-8">
                                 <tr class="fw-bolder text-gray-800 px-7">
-                                    
-                                    <th>No</th>
+                                    <th>@lang('label.no')</th>
                                     <th>@lang('settings::label.permission.table.name')</th>
                                     <th>@lang('settings::label.permission.table.created_at')</th>
                                     <th >@lang('label.action')</th>
@@ -143,7 +142,7 @@
                     ">"
         });
         $('#addButton').on('click', function(){
-            resetForm();
+            cleanError();
             $('.modal-title').html('@lang('settings::label.permission.form.create_permission')');
             $('#modalForm').modal('show');
         });
@@ -170,15 +169,7 @@
                     if(res.result){
                         $('#modalForm').modal('hide');
                         datatable.draw();
-                        Swal.fire({
-                            text:res.message,
-                            icon:"success",
-                            buttonsStyling:!1,
-                            confirmButtonText:"@lang('label.button.ok')",
-                            customClass:{
-                            confirmButton:"btn btn-primary"
-                            }
-                        });
+                        _success(res.message);
                     }else{
                         if(res.message.name){
                             $('#error-name').html(res.message.name[0]);
@@ -193,20 +184,12 @@
                     $('#saveButton').attr('disabled',false);
                     $('#saveButton').html('@lang("label.button.save")');
                     var err = eval("(" + xhr.responseText + ")");
-                    Swal.fire({
-                        text:err.message,
-                        icon:"error",
-                        buttonsStyling:!1,
-                        confirmButtonText:"@lang('label.button.ok')",
-                        customClass:{
-                            confirmButton:"btn btn-primary"
-                        }
-                    });
+                    _error(err.message);
                 }
             })
         });
-        $('body').on('click', '.updateData', function () {
-            resetForm();
+        $('body').on('click', '.editData', function () {
+            cleanError();
             $('#name').attr('readonly',true);
             var id = $(this).data('id');
             var url = '{{ route("settings.permission.edit", ":id") }}';
@@ -222,7 +205,7 @@
             })
         });
         $('body').on('click', '.deleteData', function () {
-            resetForm();
+            cleanError();
             const id = $(this).data('id');
             const name = $(this).data('name');
             var url = '{{ route("settings.permission.delete", ":id") }}';
@@ -261,22 +244,14 @@
                         },
                         error:function(xhr, status, error){
                             var err = eval("(" + xhr.responseText + ")");
-                            Swal.fire({
-                                text:err.message,
-                                icon:"error",
-                                buttonsStyling:!1,
-                                confirmButtonText:"@lang('label.button.ok')",
-                                customClass:{
-                                    confirmButton:"btn btn-primary"
-                                }
-                            });
+                            _error(err.message);
                         }
                     })
                 }
             })
         });
     });
-    function resetForm(){
+    function cleanError(){
         $('.roles').removeAttr('checked');
         $('#name').attr('readonly',false);
         $('#name').removeClass('is-invalid');

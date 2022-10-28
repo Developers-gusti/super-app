@@ -38,8 +38,8 @@ class UserController extends Controller
             return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function($row){
-                $btn = '<button type="button" class="btn btn-sm btn-icon btn-active-light-primary"><i class="bi bi-pencil-square"></i></button>';
-                $btn .= '<button type="button" class="btn btn-sm btn-icon btn-active-light-danger"><i class="bi bi-trash"></i></button>';
+                $btn = '<button type="button" class="btn btn-sm btn-icon btn-active-light-primary editData"><i class="bi bi-pencil-square" data-id="'.$row->id.'"></i></button>';
+                $btn .= '<button type="button" class="btn btn-sm btn-icon btn-active-light-danger deleteData" data-id="'.$row->id.'" data-name="'.$row->name.'"><i class="bi bi-trash"></i></button>';
                 return $btn;
             })
             ->rawColumns(['action'])
@@ -56,12 +56,12 @@ class UserController extends Controller
     public function create($request)
     {
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
             'remember_token'=>Str::random(16)
         ]);
-        $user->assignRole($request->role);
+        $user->assignRole($request['role']);
         return true;
     }
 
@@ -75,16 +75,20 @@ class UserController extends Controller
         $rule = $this->_validation($request->all());
         $validator = Validator::make($request->all(),$rule);
         if ($validator->passes()) {
-            if (!isset($request->id) && isset($request->password) ) {
+            if ($request->id==null && $request->password!=null ) {
                 $this->create($request->all());
+                $message = Lang::get('messages.notification.new_user',['attribute'=>$request->name]);
             } else if (isset($request->id) && !isset($request->password) ) {
                $this->update($request->id,$request->all());
+               $message = Lang::get('messages.success.edit_data',['attribute'=>Lang::get('label.menu.user')]);
             } else if (isset($request->id) && isset($request->password) ) {
                $this->changePassoword($request->id,$request->password);
+               $message = Lang::get('messages.notification.new_user',['attribute'=>$request->name]);
+
             }
-            return Response::json(['result' => true, 'message' => 'Success'], 200);
+            return Response::json(['result' => true, 'message' => $message], 200);
         }else{
-            return Response::json(['result' => false, 'errors' => $validator->errors()],422);
+            return Response::json(['result' => false, 'message' => $validator->errors()],200);
         }
     }
 
@@ -160,16 +164,16 @@ class UserController extends Controller
     public function _validation($request)
     {
         //insert new data
-        if (!isset($request->id) && isset($request->password) ) {
+        if (!isset($request['id']) && isset($request['password'])) {
             $rule = [
                 'name'=>'required',
                 'email'=>'required|email|unique:users',
-                'password'=>'required|min:6|max:12|password_confirmation',
+                'password'=>'required|min:6|max:12|confirmed',
                 'role'=>'required',
             ];
         }
         //Update Data
-        if (isset($request->id) && !isset($request->password) ) {
+        if (isset($request['id']) && !isset($request['password']) ) {
             $rule = [
                 'name'=>'required',
                 'email'=>'required|email',
@@ -177,10 +181,10 @@ class UserController extends Controller
             ];
         }
         //Change Password
-        if (isset($request->id) && isset($request->password) ) {
+        if (isset($request['id']) && isset($request['password']) ) {
             $rule = [
                 'email'=>'required|email',
-                'password'=>'required|min:6|max:12|password_confirmation',
+                'password'=>'required|min:6|max:12|confirmed',
             ];
         }
         return $rule;

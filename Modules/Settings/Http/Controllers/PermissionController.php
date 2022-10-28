@@ -38,7 +38,7 @@ class PermissionController extends Controller
                 $user = Auth::user();
                 $btn = '';
                 if ($user->hasPermissionTo('update_permission')) {
-                    $btn .= '<button type="button" class="btn btn-sm btn-icon btn-active-light-primary updateData" data-id="'.$row->id.'"><i class="bi bi-pencil-square"></i></button>';
+                    $btn .= '<button type="button" class="btn btn-sm btn-icon btn-active-light-primary editData" data-id="'.$row->id.'"><i class="bi bi-pencil-square"></i></button>';
                 }
                 if ($user->hasPermissionTo('delete_permission')) {
                     $btn .= '<button type="button" class="btn btn-sm btn-icon btn-active-light-danger deleteData" data-id="'.$row->id.'" data-name="'.$row->name.'"><i class="bi bi-trash"></i></button>';

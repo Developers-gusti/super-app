@@ -89,6 +89,7 @@
 		<!--begin::Page Vendors Javascript(used by this page)-->
 		<script src="{{ asset('build/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
 		<script src="{{ asset('build/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+        <script src="{{ asset('build/assets/js/messages.js') }}"></script>
 		<!--end::Page Vendors Javascript-->
 		<!--begin::Page Custom Javascript(used by this page)-->
 		{{-- <script src="{{ asset('build/assets/js/widgets.bundle.js') }}}}"></script>
