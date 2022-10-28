@@ -38,7 +38,7 @@ class UserController extends Controller
             return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function($row){
-                $btn = '<button type="button" class="btn btn-sm btn-icon btn-active-light-primary editData"><i class="bi bi-pencil-square" data-id="'.$row->id.'"></i></button>';
+                $btn = '<button type="button" class="btn btn-sm btn-icon btn-active-light-primary editData"  data-id="'.$row->id.'"><i class="bi bi-pencil-square"></i></button>';
                 $btn .= '<button type="button" class="btn btn-sm btn-icon btn-active-light-danger deleteData" data-id="'.$row->id.'" data-name="'.$row->name.'"><i class="bi bi-trash"></i></button>';
                 return $btn;
             })
@@ -79,8 +79,8 @@ class UserController extends Controller
                 $this->create($request->all());
                 $message = Lang::get('messages.notification.new_user',['attribute'=>$request->name]);
             } else if (isset($request->id) && !isset($request->password) ) {
-               $this->update($request->id,$request->all());
-               $message = Lang::get('messages.success.edit_data',['attribute'=>Lang::get('label.menu.user')]);
+               $this->update($request->all(),$request->id);
+               $message = Lang::get('messages.success.edit_data',['title'=>Lang::get('label.menu.user').' '.$request->name]);
             } else if (isset($request->id) && isset($request->password) ) {
                $this->changePassoword($request->id,$request->password);
                $message = Lang::get('messages.notification.new_user',['attribute'=>$request->name]);
@@ -109,7 +109,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        return view('settings::edit');
+        $user = User::find($id);
+        $roles = $user->getRoleNames();
+        return Response::json(['user'=>$user,'roles'=>$roles]);
     }
 
     /**
@@ -118,12 +120,13 @@ class UserController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update($request, $id)
     {
-        $user = User::find($id)->update([
-            'name' => $request->name,
+        $user = User::find($id);
+        $user->syncRoles($request['role']);
+        $user->update([
+            'name' => $request['name'],
         ]);
-        $user->syncRoles($request->role);
         return true;
     }
 

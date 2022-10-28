@@ -89,10 +89,11 @@
                         <input type="email" class="form-control form-control-sm" id="email" name="email">
                         <div class="fv-plugins-message-container invalid-feedback" id="error-email"></div>
                     </div>
-                    <div class="form-grou mb-7">
-                        <label class="mb-5" for="role">@lang('label.role')<span class="text-danger">*</span><label>
-                        <select class="form-select form-select-sm" data-placeholder="Select an option" name="role" id="role">
+                    <div class="form-group mb-7">
+                        <label for="" class="form-label">@lang('label.role')</label>
+                        <select class="form-select form-select-sm " data-control="select2" data-dropdown-parent="#modalForm" name="role" id="role" data-placeholder="Select an option" data-allow-clear="true">
                             <option></option>
+                            <option value=""></option>
                             @foreach ($role as $item)
                             <option value="{{ $item->name }}">{{ strtoupper($item->name) }}</option>
                             @endforeach
@@ -175,17 +176,20 @@
             cleanError();
             $('#password-section').hide();
             $('#email').attr('readonly',true);
+            $('#email').addClass('form-control-solid');
+
             var id = $(this).data('id');
             var url = '{{ route("settings.user.edit", ":id") }}';
             url = url.replace(':id', id );
-            $.get(url, function (data) {
-                $('.modal-title').html("@lang('settings::label.permission.form.create_permission')");
+            $.get(url, function (response) {
+                $('.modal-title').html("@lang('settings::label.user.edit_user')");
                 $('#modalForm').modal('show');
-                $('#id').val(data.permission.id);
-                $('#name').val(data.permission.name);
-                $.each(data.roles, function( index, value ) {
-                    $('#'+value.name+value.id).attr('checked',true);
-                });
+                $('#id').val(response.user.id);
+                $('#name').val(response.user.name);
+                $('#email').val(response.user.email);
+                $('#role').val(response.roles[0]);
+                $('#role').trigger('change');
+
             })
         });
         $('#data-form').submit(function (e) {
@@ -241,6 +245,9 @@
         });
     });
     function cleanError() {
+        $('#email').attr('readonly',false);
+        $('#email').removeClass('form-control-solid');
+
         $('#name').removeClass('is-invalid');
         $('#email').removeClass('is-invalid');
         $('#role').removeClass('is-invalid');
