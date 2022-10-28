@@ -28,7 +28,7 @@ class PermissionController extends Controller
     }
     public function index(Request $request)
     {
-        SEOMeta::setTitle('Permission');
+        SEOMeta::setTitle(Lang::get('label.menu.permission'));
         $role = Role::orderBy('name','asc')->get();
         if ($request->ajax()) {
             $data = Permission::latest();

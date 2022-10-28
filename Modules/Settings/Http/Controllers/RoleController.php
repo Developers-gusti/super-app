@@ -6,6 +6,7 @@ use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Lang;
 
 class RoleController extends Controller
 {
@@ -19,7 +20,8 @@ class RoleController extends Controller
     }
     public function index()
     {
-        SEOMeta::setTitle('Role');
+        SEOMeta::setTitle(Lang::get('label.menu.role'));
+
         return view('settings::role.index');
     }
 

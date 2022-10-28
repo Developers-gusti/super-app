@@ -31,7 +31,7 @@ class UserController extends Controller
     }
     public function index(Request $request)
     {
-        SEOMeta::setTitle('User');
+        SEOMeta::setTitle(Lang::get('label.menu.user'));
         $role = Role::all();
         if ($request->ajax()) {
             $data = User::latest();
