@@ -34,7 +34,8 @@ return [
         'remove' => 'Remove',
         'close' => 'Close',
         'continue' => 'Ya, Continue!',
-        'process' => 'Prosesing ...',
+        'process' => '<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        Prosesing ...',
         'filter' => 'Filter',
         'ok' => 'Ok',
         'change_email' => 'Change Email',
