@@ -23,6 +23,12 @@ return [
         'role'=>'Peran',
         'office'=>'Kantor',
         'no'=>'No',
+    ],
+    'role'=>[
+        'create_role'=>'Buat Peran Baru',
+        'edit_role'=>'Edit Peran',
+        'delete_role'=>'Delete Peran',
+        'name'=>'Name Peran',
     ]
 ];
 ?>

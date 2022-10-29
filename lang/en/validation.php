@@ -32,7 +32,7 @@ return [
     ],
     'boolean' => ':Attribute field must be true or false.',
     'confirmed' => ':Attribute confirmation does not match.',
-    'current_password' => 'The password is incorrect.',
+    'current_password' => 'Current password is incorrect.',
     'date' => ':Attribute is not a valid date.',
     'date_equals' => ':Attribute must be a date equal to :date.',
     'date_format' => ':Attribute does not match the format :format.',
@@ -165,6 +165,13 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name' => Lang::get('label.username'),
+        'email' => Lang::get('label.email'),
+        'role' => Lang::get('label.role'),
+        'current_password' => Lang::get('label.current_password'),
+        'new_password' => Lang::get('label.new_password'),
+        'new_password_confirmation' => Lang::get('label.new_password_confirmation'),
+    ],
 
 ];

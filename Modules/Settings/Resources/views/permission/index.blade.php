@@ -1,55 +1,23 @@
 @extends('layouts.app')
 @section('content')
-<!--begin::Toolbar-->
-<div class="toolbar" id="kt_toolbar">
-    <!--begin::Container-->
-    <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
-        <!--begin::Page title-->
-        <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
-            <!--begin::Title-->
-            <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">@lang('label.menu.permission')
-            <!--begin::Separator-->
-            <span class="h-20px border-1 border-gray-200 border-start ms-3 mx-2 me-1"></span>
-            <!--end::Separator-->
-            <!--begin::Description-->
-            <!--end::Description--></h1>
-            <!--end::Title-->
-        </div>
-        <!--end::Page title-->
-        <!--begin::Actions-->
-        <div class="d-flex align-items-center gap-2 gap-lg-3">
-            <!--begin::Filter menu-->
-            <div class="m-0">
-                <!--begin::Menu toggle-->
-                <a href="#" class="btn btn-sm btn-flex btn-light btn-active-primary fw-bolder" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"><i class="bi bi-funnel-fill"></i> Filter</a>
-                <!--end::Menu toggle-->
-               
-            </div>
-            <!--end::Filter menu-->
-            <!--begin::Secondary button-->
-            <!--end::Secondary button-->
-            <!--begin::Primary button-->
-            @can('create_permission')
-                    <button type="button"  id="addButton" class="btn btn-sm btn-primary" ><i class="bi bi-person-plus-fill mr-2"></i> @lang('settings::label.permission.form.create_permission')</button>
-                    @endcan
-            <!--end::Primary button-->
-        </div>
-        <!--end::Actions-->
-    </div>
-    <!--end::Container-->
-</div>
-<!--end::Toolbar-->
 <div class="post d-flex flex-column-fluid" id="kt_post">
     <div id="kt_content_container" class="container-xxl">
         <div class="row">
             <div class="col-xl-12">
                 <div class="card card-xl-stretch">
+                    <div class="card-header">
+                        <h3 class="card-title">@lang('label.menu.permission')</h3>
+                        <div class="card-toolbar">
+                            @can('create_permission')
+                            <button type="button"  id="addButton" class="btn btn-sm btn-primary" ><i class="bi bi-person-plus-fill mr-2"></i> @lang('settings::label.permission.form.create_permission')</button>
+                            @endcan
+                        </div>
+                    </div>
                     <div class="card-body pt-5">
                         <table id="kt_datatable_example_5" class="table table-row-bordered gy-2 gs-5 border rounded">
                             <thead class="fs-8">
                                 <tr class="fw-bolder text-gray-800 px-7">
-                                    
-                                    <th>No</th>
+                                    <th>@lang('label.no')</th>
                                     <th>@lang('settings::label.permission.table.name')</th>
                                     <th>@lang('settings::label.permission.table.created_at')</th>
                                     <th >@lang('label.action')</th>
@@ -143,7 +111,7 @@
                     ">"
         });
         $('#addButton').on('click', function(){
-            resetForm();
+            cleanError();
             $('.modal-title').html('@lang('settings::label.permission.form.create_permission')');
             $('#modalForm').modal('show');
         });
@@ -170,15 +138,7 @@
                     if(res.result){
                         $('#modalForm').modal('hide');
                         datatable.draw();
-                        Swal.fire({
-                            text:res.message,
-                            icon:"success",
-                            buttonsStyling:!1,
-                            confirmButtonText:"@lang('label.button.ok')",
-                            customClass:{
-                            confirmButton:"btn btn-primary"
-                            }
-                        });
+                        _success(res.message);
                     }else{
                         if(res.message.name){
                             $('#error-name').html(res.message.name[0]);
@@ -193,20 +153,12 @@
                     $('#saveButton').attr('disabled',false);
                     $('#saveButton').html('@lang("label.button.save")');
                     var err = eval("(" + xhr.responseText + ")");
-                    Swal.fire({
-                        text:err.message,
-                        icon:"error",
-                        buttonsStyling:!1,
-                        confirmButtonText:"@lang('label.button.ok')",
-                        customClass:{
-                            confirmButton:"btn btn-primary"
-                        }
-                    });
+                    _error(err.message);
                 }
             })
         });
-        $('body').on('click', '.updateData', function () {
-            resetForm();
+        $('body').on('click', '.editData', function () {
+            cleanError();
             $('#name').attr('readonly',true);
             var id = $(this).data('id');
             var url = '{{ route("settings.permission.edit", ":id") }}';
@@ -222,7 +174,7 @@
             })
         });
         $('body').on('click', '.deleteData', function () {
-            resetForm();
+            cleanError();
             const id = $(this).data('id');
             const name = $(this).data('name');
             var url = '{{ route("settings.permission.delete", ":id") }}';
@@ -261,22 +213,14 @@
                         },
                         error:function(xhr, status, error){
                             var err = eval("(" + xhr.responseText + ")");
-                            Swal.fire({
-                                text:err.message,
-                                icon:"error",
-                                buttonsStyling:!1,
-                                confirmButtonText:"@lang('label.button.ok')",
-                                customClass:{
-                                    confirmButton:"btn btn-primary"
-                                }
-                            });
+                            _error(err.message);
                         }
                     })
                 }
             })
         });
     });
-    function resetForm(){
+    function cleanError(){
         $('.roles').removeAttr('checked');
         $('#name').attr('readonly',false);
         $('#name').removeClass('is-invalid');

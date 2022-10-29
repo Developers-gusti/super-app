@@ -32,6 +32,7 @@ return [
     ],
     'boolean'              => ':Attribute harus bernilai true atau false',
     'confirmed'            => 'Konfirmasi :attribute tidak cocok.',
+    'current_password'     => 'Kata sandi saat ini salah',
     'date'                 => ':Attribute bukan tanggal yang valid.',
     'date_equals'          => ':Attribute harus berisi tanggal yang sama dengan :date.',
     'date_format'          => ':Attribute tidak cocok dengan format :format.',
@@ -128,5 +129,12 @@ return [
             'rule-name' => 'custom-message',
         ],
     ],
-    'attributes'           => [],
+    'attributes'           => [
+        'name' => Lang::get('label.username'),
+        'email' => Lang::get('label.email'),
+        'role' => Lang::get('label.role'),
+        'current_password' => Lang::get('label.current_password'),
+        'new_password' => Lang::get('label.new_password'),
+        'new_password_confirmation' => Lang::get('label.new_password_confirmation'),
+    ],
 ];

@@ -3,9 +3,14 @@
 return [
     'notification' => 'Notification',
     'username' => 'Username',
+    'user_information' => 'User Information',
     'email' => 'Email',
     'password' => 'Password',
     'password_confirmation' => 'Password Confirmation',
+    'change_password' => 'Change Password',
+    'current_password' => 'Current Password',
+    'new_password' => 'New Password',
+    'new_password_confirmation' => 'Confirmation New Password',
     'dashboard' => 'Dashboard',
     'role' => 'Role',
     'request_role' => 'Request Change Role',
@@ -18,6 +23,7 @@ return [
     'action'=>'Action',
     'button' => [
         'save' => 'Save',
+        'update' => 'Update',
         'save_new' => 'Save and Create New',
         'create_new' => 'Create New',
         'cancel' => 'Cancel',
@@ -28,7 +34,8 @@ return [
         'remove' => 'Remove',
         'close' => 'Close',
         'continue' => 'Ya, Continue!',
-        'process' => 'Prosesing ...',
+        'process' => '<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        Prosesing ...',
         'filter' => 'Filter',
         'ok' => 'Ok',
         'change_email' => 'Change Email',

@@ -39,7 +39,9 @@
 	</head>
 	<!--end::Head-->
 	<!--begin::Body-->
-	<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed aside-enabled aside-fixed" style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
+    <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed aside-enabled aside-fixed">
+
+	{{-- <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed aside-enabled aside-fixed" style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px"> --}}
 		<!--begin::Main-->
 		<!--begin::Root-->
 		<div class="d-flex flex-column flex-root">
@@ -89,10 +91,11 @@
 		<!--begin::Page Vendors Javascript(used by this page)-->
 		<script src="{{ asset('build/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
 		<script src="{{ asset('build/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+        <script src="{{ asset('build/assets/js/messages.js') }}"></script>
 		<!--end::Page Vendors Javascript-->
 		<!--begin::Page Custom Javascript(used by this page)-->
-		<script src="{{ asset('build/assets/js/widgets.bundle.js') }}}}"></script>
-		<script src="{{ asset('build/assets/js/custom/widgets.js') }}}"></script>
+		{{-- <script src="{{ asset('build/assets/js/widgets.bundle.js') }}}}"></script>
+		<script src="{{ asset('build/assets/js/custom/widgets.js') }}}"></script> --}}
 
 		<!--end::Page Custom Javascript-->
 		<!--end::Javascript-->

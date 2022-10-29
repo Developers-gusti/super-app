@@ -20,6 +20,12 @@ return [
     'user'=>[
         'create_user'=>'Create New User',
         'edit_user'=>'Edit User',
+    ],
+    'role'=>[
+        'create_role'=>'Create New Role',
+        'edit_role'=>'Edit Role',
+        'delete_role'=>'Delete Role',
+        'name'=>'Role Name',
     ]
 ];
 ?>

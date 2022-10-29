@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Log;
 */
 Route::get('/', function () { return view('auth.login');});
 Route::middleware(['auth:sanctum','prevent-back-history',config('jetstream.auth_session'),'verified'])->group(function () {
-    Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
+    Route::get('dashboard', function () {return view('dashboard');})->name('dashboard');
 });
-Route::get('/language/{locale}', [LocalizationController::class,'lang'])->name('swich.lang');
+Route::get('language/{locale}', [LocalizationController::class,'lang'])->name('swich.lang');
 

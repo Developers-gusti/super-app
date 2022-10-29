@@ -64,7 +64,7 @@
                         <!--end::Menu separator-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
-                            <a href="../../demo1/dist/account/overview.html" class="menu-link px-5">
+                            <a href="{{ route('settings.profile') }}" class="menu-link px-5">
                                 <span class="bi bi-person-badge-fill me-4" ></span>
                                 @lang('label.menu.my_profile')</a>
                         </div>
@@ -98,7 +98,7 @@
                         <!--end::Menu item-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
-                            <a href="{{ route('logout') }}"  class="menu-link px-5 btn-active-icon-primary"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <a href="{{ route('logout') }}"  class="menu-link px-5 btn-active-icon-primary" id="signout-account"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf
                                 </form>
