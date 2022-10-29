@@ -1,56 +1,25 @@
 @extends('layouts.app')
 @section('content')
-<!--begin::Toolbar-->
-<div class="toolbar" id="kt_toolbar">
-    <!--begin::Container-->
-    <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
-        <!--begin::Page title-->
-        <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
-            <!--begin::Title-->
-            <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">@lang('label.menu.permission')
-            <!--begin::Separator-->
-            <span class="h-20px border-1 border-gray-200 border-start ms-3 mx-2 me-1"></span>
-            <!--end::Separator-->
-            <!--begin::Description-->
-            <!--end::Description--></h1>
-            <!--end::Title-->
-        </div>
-        <!--end::Page title-->
-        <!--begin::Actions-->
-        <div class="d-flex align-items-center gap-2 gap-lg-3">
-            <!--begin::Filter menu-->
-            <div class="m-0">
-                <!--begin::Menu toggle-->
-                <a href="#" class="btn btn-sm btn-flex btn-light btn-active-primary fw-bolder" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"><i class="bi bi-funnel-fill"></i> Filter</a>
-                <!--end::Menu toggle-->
-
-            </div>
-            <!--end::Filter menu-->
-            <!--begin::Secondary button-->
-            <!--end::Secondary button-->
-            <!--begin::Primary button-->
-            @can('create_permission')
-                    <button type="button"  id="addButton" class="btn btn-sm btn-primary" ><i class="bi bi-person-plus-fill mr-2"></i> @lang('settings::label.permission.form.create_permission')</button>
-                    @endcan
-            <!--end::Primary button-->
-        </div>
-        <!--end::Actions-->
-    </div>
-    <!--end::Container-->
-</div>
-<!--end::Toolbar-->
 <div class="post d-flex flex-column-fluid" id="kt_post">
     <div id="kt_content_container" class="container-xxl">
         <div class="row">
             <div class="col-xl-12">
                 <div class="card card-xl-stretch">
+                    <div class="card-header">
+                        <h3 class="card-title">@lang('label.menu.role')</h3>
+                        <div class="card-toolbar">
+                            @can('create_role')
+                            <a href="{{ route('settings.role.create') }}" class="btn btn-sm btn-primary" ><i class="bi bi-person-plus-fill mr-2"></i> @lang('settings::label.role.create_role')</a>
+                            @endcan
+                        </div>
+                    </div>
                     <div class="card-body pt-5">
                         <table id="kt_datatable_example_5" class="table table-row-bordered gy-2 gs-5 border rounded">
                             <thead class="fs-8">
                                 <tr class="fw-bolder text-gray-800 px-7">
                                     <th>@lang('label.no')</th>
-                                    <th>@lang('settings::label.permission.table.name')</th>
-                                    <th>@lang('settings::label.permission.table.created_at')</th>
+                                    <th>@lang('settings::label.role.name')</th>
+                                    <th>@lang('label.created_at')</th>
                                     <th >@lang('label.action')</th>
                                 </tr>
                             </thead>
@@ -75,26 +44,13 @@
             </div>
             <form id="data-form">
             <div class="modal-body">
-                    @csrf
-                    <input type="hidden" name="id" id="id">
-                    <div class="form-group mb-7 ">
-                        <label for="name">@lang('settings::label.permission.table.name')<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="Ex: function_menu">
-                        <div class="fv-plugins-message-container invalid-feedback" id="error-name"></div>
-                    </div>
-                    <div class="form-grou mb-7">
-                        <label class="mb-5" for="role">@lang('settings::label.permission.form.give_permission')<span class="text-danger">*</span></label>
-                        @foreach ($role as $item)
-                        <label class="form-check form-check-custom form-check-solid mb-3">
-                            <input class="form-check-input roles" type="checkbox" name="role[]" id="{{ $item->name.$item->id }}" value="{{ $item->id }}"/>
-                            <span class="form-check-label">
-                                {{ strtoupper($item->name) }}
-                            </span>
-                        </label>
-                        @endforeach
-                        <div class="fv-plugins-message-container invalid-feedback" id="error-role"></div>
-                    </div>
-
+                @csrf
+                <input type="hidden" name="id" id="id">
+                <div class="form-group mb-7 ">
+                    <label for="name">@lang('settings::label.role.name')<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control form-control-sm" id="name" name="name">
+                    <div class="fv-plugins-message-container invalid-feedback" id="error-name"></div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-primary font-weight-bold" data-bs-dismiss="modal">@lang('label.button.close')</button>
@@ -111,7 +67,7 @@
             serverSide: true,
             responsive: true,
             ajax:{
-                url:"{{ route('settings.permission') }}",
+                url:"{{ route('settings.role') }}",
                 data:{
                     brand_code:function(){ return $('#check-brand').val(); }
                 }
@@ -129,28 +85,27 @@
 
             ],
             dom:
-                    "<'row'" +
-                    "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
-                    "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
-                    ">" +
+                "<'row'" +
+                "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
+                "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
+                ">" +
 
-                    "<'table-responsive'tr>" +
-
-                    "<'row'" +
-                    "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
-                    "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
-                    ">"
+                "<'table-responsive'tr>" +
+                "<'row'" +
+                "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
+                "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
+                ">"
         });
         $('#addButton').on('click', function(){
             cleanError();
-            $('.modal-title').html('@lang('settings::label.permission.form.create_permission')');
+            $('.modal-title').html('@lang('settings::label.role.create_role')');
             $('#modalForm').modal('show');
         });
         $('#data-form').on('submit', function(event){
             event.preventDefault();
             $.ajax({
                 method:'POST',
-                url:'{{ route("settings.permission.store") }}',
+                url:'{{ route("settings.role.store") }}',
                 data:new FormData(this),
                 dataType:'JSON',
                 contentType:false,
@@ -192,13 +147,13 @@
             cleanError();
             $('#name').attr('readonly',true);
             var id = $(this).data('id');
-            var url = '{{ route("settings.permission.edit", ":id") }}';
+            var url = '{{ route("settings.role.edit", ":id") }}';
             url = url.replace(':id', id );
             $.get(url, function (data) {
-                $('.modal-title').html("@lang('settings::label.permission.form.create_permission')");
+                $('.modal-title').html("@lang('settings::label.role.create_role')");
                 $('#modalForm').modal('show');
-                $('#id').val(data.permission.id);
-                $('#name').val(data.permission.name);
+                $('#id').val(data.role.id);
+                $('#name').val(data.role.name);
                 $.each(data.roles, function( index, value ) {
                     $('#'+value.name+value.id).attr('checked',true);
                 });
@@ -208,7 +163,7 @@
             cleanError();
             const id = $(this).data('id');
             const name = $(this).data('name');
-            var url = '{{ route("settings.permission.delete", ":id") }}';
+            var url = '{{ route("settings.role.delete", ":id") }}';
             url = url.replace(':id', id );
             Swal.fire({
                 title: "@lang('label.button.delete') : "+name,

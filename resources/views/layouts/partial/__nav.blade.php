@@ -50,7 +50,7 @@
                         @endcan
                         @can('read_role')
                         <div class="menu-item">
-                            <a class="menu-link" href="{{ route('role') }}">
+                            <a class="menu-link" href="{{ route('settings.role') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>

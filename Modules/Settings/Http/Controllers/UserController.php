@@ -38,11 +38,15 @@ class UserController extends Controller
             return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function($row){
+                if (Auth::user()->hasPermissionTo('update_user')) {
                 $btn = '<button type="button" class="btn btn-sm btn-icon btn-active-light-primary editData"  data-id="'.$row->id.'"><i class="bi bi-pencil-square"></i></button>';
                 $btn .= '<button type="button" class="btn btn-sm btn-icon btn-active-light-warning changePassword" data-id="'.$row->id.'" data-email="'.$row->email.'"><i class="bi bi-key-fill"></i></button>';
+                }
+                if (Auth::user()->hasPermissionTo('delete_user')) {
                 $btn .= '<button type="button" class="btn btn-sm btn-icon btn-active-light-danger deleteData" data-id="'.$row->id.'" data-name="'.$row->name.'"><i class="bi bi-trash"></i></button>';
 
                 return $btn;
+                }
             })
             ->rawColumns(['action'])
             ->make(true);

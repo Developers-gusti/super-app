@@ -59,7 +59,7 @@ return [
         'office'            => 'Kantor',
         'settings'          => 'Pengaturan',
         'user'              => 'Pengguna',
-        'role'              => 'Persan',
+        'role'              => 'Peran',
         'permission'        => 'Ijin Akses',
         'my_profile'        => 'Profile Saya',
         'language'          => 'Bahasa',
