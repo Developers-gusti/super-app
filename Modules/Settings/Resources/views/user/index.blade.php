@@ -33,8 +33,8 @@
         </div>
     </div>
 </div>
-<div class="modal bg-white fade" id="modalForm" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen" role="document">
+<div class="modal fade" id="modalForm" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content shadow-none">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"></h5>
