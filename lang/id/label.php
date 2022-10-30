@@ -39,7 +39,7 @@ return [
         'filter' => '<i class="bi bi-funnel-fill"></i> Filter',
         'ok' => 'Ok',
         'change_email' => 'Ubah Email',
-        'change_password' => 'Ubah Password',
+        'change_password' => '<i class="bi bi-key-fill"></i> Ubah Password',
         'request_role' => 'Permintaan Ubah Hak Akses',
         'accept_request'    => 'Terima Permintaan',
         'view'  => '<i class="bi bi-eye-fill"></i> Lihat',

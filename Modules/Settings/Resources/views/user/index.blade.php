@@ -46,39 +46,49 @@
             <div class="modal-body">
                 @csrf
                 <input type="hidden" name="id" id="id">
-                <div class="form-group mb-7 ">
-                    <label for="email">@lang('label.email')<span class="text-danger">*</span></label>
-                    <input type="email" class="form-control form-control-sm" id="email" name="email">
-                    <div class="fv-plugins-message-container invalid-feedback" id="error-email"></div>
+                <div class="row mb-7 ">
+                    <label class="col-lg-4 form-label required " for="email">@lang('label.email')</label>
+                   <div class="col-lg-8">
+                        <input type="email" class="form-control form-control-sm" id="email" name="email">
+                        <div class="fv-plugins-message-container invalid-feedback" id="error-email"></div>
+                   </div>
                 </div>
                 <div id="user-section">
-                    <div class="form-group mb-7 ">
-                        <label for="name">@lang('label.username')<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-sm" id="name" name="name">
-                        <div class="fv-plugins-message-container invalid-feedback" id="error-name"></div>
+                    <div class="row mb-7 ">
+                        <label class="col-lg-4 form-label required " for="name">@lang('label.username')</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control form-control-sm" id="name" name="name">
+                            <div class="fv-plugins-message-container invalid-feedback" id="error-name"></div>
+                        </div>
                     </div>
-                    <div class="form-group mb-7">
-                        <label for="" class="form-label">@lang('label.role')</label>
-                        <select class="form-select form-select-sm " data-control="select2" data-dropdown-parent="#modalForm" name="role" id="role" data-placeholder="Select an option" data-allow-clear="true">
-                            <option></option>
-                            <option value=""></option>
-                            @foreach ($role as $item)
-                            <option value="{{ $item->name }}">{{ strtoupper($item->name) }}</option>
-                            @endforeach
-                        </select>
-                        <div class="fv-plugins-message-container invalid-feedback" id="error-role"></div>
+                    <div class="row mb-7">
+                        <label for="role" class="col-lg-4 form-label required ">@lang('label.role')</label>
+                        <div class="col-lg-8">
+                            <select class="form-select form-select-sm " data-control="select2" data-dropdown-parent="#modalForm" name="role" id="role" data-placeholder="Select an option" data-allow-clear="true">
+                                <option></option>
+                                <option value=""></option>
+                                @foreach ($role as $item)
+                                <option value="{{ $item->name }}">{{ strtoupper($item->name) }}</option>
+                                @endforeach
+                            </select>
+                            <div class="fv-plugins-message-container invalid-feedback" id="error-role"></div>
+                        </div>
                     </div>
                 </div>
                 <div id="password-section">
-                    <div class="form-group mb-7 ">
-                        <label for="password">@lang('label.password')<span class="text-danger">*</span></label>
-                        <input type="password" class="form-control form-control-sm" id="password" name="password" maxlength="12" minlength="6">
-                        <div class="fv-plugins-message-container invalid-feedback" id="error-password"></div>
+                    <div class="row mb-7 ">
+                        <label class="col-lg-4 form-label required " for="password">@lang('label.password')</label>
+                        <div class="col-lg-8">
+                            <input type="password" class="form-control form-control-sm" id="password" name="password" maxlength="12" minlength="6">
+                            <div class="fv-plugins-message-container invalid-feedback" id="error-password"></div>
+                        </div>
                     </div>
-                    <div class="form-group mb-7 ">
-                        <label for="password_confirmation">@lang('label.password_confirmation')<span class="text-danger">*</span></label>
-                        <input type="password" class="form-control form-control-sm" id="password_confirmation" name="password_confirmation" maxlength="12" minlength="6">
-                        <div class="fv-plugins-message-container invalid-feedback" id="error-password_confirmation"></div>
+                    <div class="row mb-7 ">
+                        <label class="col-lg-4 form-label required " for="password_confirmation">@lang('label.password_confirmation')</label>
+                        <div class="col-lg-8">
+                            <input type="password" class="form-control form-control-sm" id="password_confirmation" name="password_confirmation" maxlength="12" minlength="6">
+                            <div class="fv-plugins-message-container invalid-feedback" id="error-password_confirmation"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -181,14 +191,14 @@
             var url = '{{ route("settings.user.delete", ":id") }}';
             url = url.replace(':id', id );
             Swal.fire({
-                title: "@lang('label.button.delete') : "+name,
-                text: "@lang('label.confirmation_delete')",
+                title: '@lang("label.button.delete") : '+name,
+                text: '@lang("label.confirmation_delete")',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: "@lang('label.button.continue')",
-                cancelButtonText: "@lang('label.button.cancel')",
+                confirmButtonText: '@lang("label.button.continue")',
+                cancelButtonText: '@lang("label.button.cancel")',
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({

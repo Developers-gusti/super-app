@@ -38,7 +38,7 @@ return [
         'filter' => '<i class="bi bi-funnel-fill"></i> Filter',
         'ok' => 'Ok',
         'change_email' => 'Change Email',
-        'change_password' => 'Change Password',
+        'change_password' => '<i class="bi bi-key-fill"></i> Change Password',
         'request_role' => 'Request Role',
         'accept_request'    => 'Accept Request',
         'view'  => '<i class="bi bi-eye-fill"></i> View',

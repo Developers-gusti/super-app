@@ -166,14 +166,14 @@
             var url = '{{ route("settings.role.delete", ":id") }}';
             url = url.replace(':id', id );
             Swal.fire({
-                title: "@lang('label.button.delete') : "+name,
-                text: "@lang('label.confirmation_delete')",
+                title: '@lang("label.button.delete") : '+name,
+                text: '@lang("label.confirmation_delete")',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: "@lang('label.button.continue')",
-                cancelButtonText: "@lang('label.button.cancel')",
+                confirmButtonText: '@lang("label.button.continue")',
+                cancelButtonText: '@lang("label.button.cancel")',
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
@@ -186,15 +186,7 @@
                         dataType:'JSON',
                         processData:true,
                         success:function(res){
-                            Swal.fire({
-                                text:"@lang('messages.success.delete_data', ['title' => '"+name+"'])",
-                                icon:"success",
-                                buttonsStyling:!1,
-                                confirmButtonText:"@lang('label.button.ok')",
-                                customClass:{
-                                confirmButton:"btn btn-primary"
-                                }
-                            });
+                            _success("@lang('messages.success.delete_data', ['title' => '"+name+"'])");
                             datatable.draw();
                         },
                         error:function(xhr, status, error){
