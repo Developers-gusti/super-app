@@ -2,12 +2,15 @@
 
 namespace Modules\Settings\Http\Controllers;
 
+use App\Models\User;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Auth;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
@@ -53,8 +56,10 @@ class RoleController extends Controller
     public function create()
     {
         SEOMeta::setTitle(Lang::get('settings::label.role.create_role'));
-        $permission = Permission::orderBy('id','desc')->get();
-        return view('settings::role.create')->with(['permission'=>$permission]);
+        $user_permission = Permission::where('name','LIKE','%user%')->get();
+        $role_permission = Permission::where('name','LIKE','%role%')->get();
+        $permission_permission = Permission::where('name','LIKE','%permission%')->get();
+        return view('settings::role.create')->with(['user'=>$user_permission,'role'=>$role_permission,'permission'=>$permission_permission]);
     }
 
     /**
@@ -64,7 +69,25 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rule = [
+            'name'=>'required|unique:roles',
+            'permission_name'=>'required',
+        ];
+        $message = Lang::get('messages.success.new_data');
+        $validator = Validator::make($request->all(),$rule);
+        if ($validator->passes()) {
+            $role = Role::create([
+                'name'=>$request->name,
+                'guard_name'=>'web'
+            ]);
+            $permission = $request->input('permission_name');
+            foreach ($permission as $value) {
+                $role->givePermissionTo($value);
+            }
+            return Response::json(['result' =>true, 'message' =>$message]);
+        }else{
+            return Response::json(['result'=>false, 'message'=>$validator->errors()]);
+        }
     }
 
     /**
