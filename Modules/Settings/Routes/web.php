@@ -36,6 +36,7 @@ Route::middleware(['auth:sanctum','prevent-back-history',config('jetstream.auth_
         Route::get('/role/create',[RoleController::class,'create'])->name('role.create');
         Route::post('/role/store',[RoleController::class,'store'])->name('role.store');
         Route::get('/role/edit/{id}',[RoleController::class,'edit'])->name('role.edit');
+        Route::post('/role/update/{id}',[RoleController::class,'update'])->name('role.update');
         Route::delete('/role/delete/{id}',[RoleController::class,'destroy'])->name('role.delete');
         /**
          * Menu Permission
