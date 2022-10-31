@@ -36,7 +36,7 @@ class RoleController extends Controller
                 $user = Auth::user();
                 $btn = '';
                 if ($user->hasPermissionTo('update_role')) {
-                    $btn .= '<button type="button" class="btn btn-sm btn-icon btn-active-light-primary editData" data-id="'.$row->id.'"><i class="bi bi-pencil-square"></i></button>';
+                    $btn .= '<a href="'.route('settings.role.edit',$row->id).'" class="btn btn-sm btn-icon btn-active-light-primary" ><i class="bi bi-pencil-square"></i></a>';
                 }
                 if ($user->hasPermissionTo('delete_role')) {
                     $btn .= '<button type="button" class="btn btn-sm btn-icon btn-active-light-danger deleteData" data-id="'.$row->id.'" data-name="'.$row->name.'"><i class="bi bi-trash"></i></button>';
@@ -107,7 +107,19 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        return view('settings::edit');
+        SEOMeta::setTitle(Lang::get('settings::label.role.edit_role'));
+        $user_permission = Permission::where('name','LIKE','%user%')->get();
+        $role_permission = Permission::where('name','LIKE','%role%')->get();
+        $permission_permission = Permission::where('name','LIKE','%permission%')->get();
+        $data_role = Role::find($id);
+        $permission = $data_role->permissions->pluck('name')->toArray();
+        return view('settings::role.edit')->with([
+            'data_permission'=>$permission,
+            'data_role'=>$data_role,
+            'user'=>$user_permission,
+            'role'=>$role_permission,
+            'permission'=>$permission_permission
+        ]);
     }
 
     /**
@@ -118,7 +130,20 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rule = [
+            'permission_name'=>'required',
+        ];
+        $message = Lang::get('messages.success.edit_data',['title'=>Lang::get('label.menu.permission')]);
+        $validator = Validator::make($request->all(),$rule);
+        if ($validator->passes()) {
+            $permission = $request->input('permission_name');
+            $data_role = Role::find($id);
+            $data_role->syncPermissions($permission);
+            return Response::json(['result' => true, 'message' => $message]);
+        } else {
+            return Response::json(['result'=>false,'message'=>$validator->errors()]);
+        }
+
     }
 
     /**

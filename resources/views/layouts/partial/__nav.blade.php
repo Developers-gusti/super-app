@@ -30,7 +30,7 @@
                         <span class="menu-title">{{ __('label.dashboard') }}</span>
                     </a>
                 </div>
-                @can('menu_setting')
+                @if(auth()->user()->can('read_user') || auth()->user()->can('read_role') || auth()->user()->can('read_permission') )
                 <div data-kt-menu-trigger="click" class="menu-item {{ request()->routeIs('settings*') ? 'here show' : ''  }} menu-accordion">
                     <span class="menu-link">
                         <span class="menu-icon"> <i class="bi bi-gear" style="font-size: 1.5rem;"></i></span>
@@ -50,7 +50,7 @@
                         @endcan
                         @can('read_role')
                         <div class="menu-item">
-                            <a class="menu-link" href="{{ route('settings.role') }}">
+                            <a class="menu-link {{ request()->routeIs('settings.role*') ? 'active' : ''  }}"" href="{{ route('settings.role') }}" >
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -70,7 +70,7 @@
                         @endcan
                     </div>
                 </div>
-                @endcan
+                @endif
             </div>
             <!--end::Menu-->
         </div>
