@@ -38,9 +38,6 @@ class RoleController extends Controller
                 if ($user->hasPermissionTo('update_role')) {
                     $btn .= '<a href="'.route('settings.role.edit',$row->id).'" class="btn btn-sm btn-icon btn-active-light-primary" ><i class="bi bi-pencil-square"></i></a>';
                 }
-                if ($user->hasPermissionTo('delete_role')) {
-                    $btn .= '<button type="button" class="btn btn-sm btn-icon btn-active-light-danger deleteData" data-id="'.$row->id.'" data-name="'.$row->name.'"><i class="bi bi-trash"></i></button>';
-                }
                 return $btn;
             })
             ->rawColumns(['action'])

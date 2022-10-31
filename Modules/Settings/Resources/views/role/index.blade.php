@@ -143,22 +143,6 @@
                 }
             })
         });
-        $('body').on('click', '.editData', function () {
-            cleanError();
-            $('#name').attr('readonly',true);
-            var id = $(this).data('id');
-            var url = '{{ route("settings.role.edit", ":id") }}';
-            url = url.replace(':id', id );
-            $.get(url, function (data) {
-                $('.modal-title').html("@lang('settings::label.role.create_role')");
-                $('#modalForm').modal('show');
-                $('#id').val(data.role.id);
-                $('#name').val(data.role.name);
-                $.each(data.roles, function( index, value ) {
-                    $('#'+value.name+value.id).attr('checked',true);
-                });
-            })
-        });
         $('body').on('click', '.deleteData', function () {
             cleanError();
             const id = $(this).data('id');
