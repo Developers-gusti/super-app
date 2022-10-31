@@ -3,6 +3,9 @@
 <div class="post d-flex flex-column-fluid" id="kt_post">
     <div id="kt_content_container" class="container-xxl">
         <div class="row">
+            <form id="data-form">
+            @csrf
+            <input type="hidden" id="id" name="id">
             <div class="col-xl-12">
                 <div class="card card-xl-stretch">
                     <div class="card-header">
@@ -16,39 +19,128 @@
                             <!--begin::Col-->
                             <div class="col-lg-8 fv-row fv-plugins-icon-container">
                                 <input type="text" name="name" id="name" class="form-control">
-                            <div class="fv-plugins-message-container invalid-feedback error-name"></div>
-                        </div>
+                                <div class="fv-plugins-message-container invalid-feedback" id="error-name"></div>
+                            </div>
                             <!--end::Col-->
                         </div>
                         <div class="row mb-6">
                             <!--begin::Label-->
-                            <label class="col-lg-4 col-form-label ">Communication</label>
+                            <label class="col-lg-4 col-form-label ">@lang('label.menu.user')</label>
                             <!--end::Label-->
                             <!--begin::Col-->
-                            <div class="col-lg-8 fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-invalid">
-                                <!--begin::Options-->
-                                <div class="d-flex align-items-center mt-3">
-                                    <!--begin::Option-->
-                                    <label class="form-check form-check-inline form-check-sm form-check-solid me-5">
-                                        <input class="form-check-input" name="communication[]" type="checkbox" value="1">
-                                        <span class="ps-2 fs-6">Email</span>
-                                    </label>
-                                    <!--end::Option-->
-                                    <!--begin::Option-->
-                                    <label class="form-check form-check-inline form-check-solid">
-                                        <input class="form-check-input" name="communication[]" type="checkbox" value="2">
-                                        <span class="fw-bold ps-2 fs-6">Phone</span>
-                                    </label>
-                                    <!--end::Option-->
+                            <div class="col-lg-8 fv-row fv-plugins-icon-container">
+                                <div class="row">
+                                    @foreach ($user as $item)
+                                    <div class="col-lg-4 col-sm-6 form-check form-check-custom form-check-solid mb-3">
+                                        <input class="form-check-input" type="checkbox" name="permission_name[]" value="{{ $item->name }}" id="{{ $item->name }}"/>
+                                        <label class="form-check-label" for="{{ $item->name }}">
+                                            {{ $item->name }}
+                                        </label>
+                                    </div>
+                                    @endforeach
                                 </div>
-                                <!--end::Options-->
-                            <div class="fv-plugins-message-container invalid-feedback"><div data-field="communication[]" data-validator="notEmpty">Please select at least one communication method</div></div></div>
-                            <!--end::Col-->
+                            </div>
                         </div>
+                        <div class="row mb-6">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 col-form-label ">@lang('label.menu.role')</label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-lg-8 fv-row fv-plugins-icon-container">
+                                <div class="row">
+                                    @foreach ($role as $item)
+                                    <div class="col-lg-4 col-sm-6 form-check form-check-custom form-check-solid mb-3">
+                                        <input class="form-check-input" type="checkbox" name="permission_name[]" value="{{ $item->name }}" id="{{ $item->name }}"/>
+                                        <label class="form-check-label" for="{{ $item->name }}">
+                                            {{ $item->name }}
+                                        </label>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-6">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 col-form-label ">@lang('label.menu.permission')</label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-lg-8 fv-row fv-plugins-icon-container">
+                                <div class="row">
+                                    @foreach ($permission as $item)
+                                    <div class="col-lg-4 col-sm-6 form-check form-check-custom form-check-solid mb-3">
+                                        <input class="form-check-input" type="checkbox" name="permission_name[]" value="{{ $item->name }}" id="{{ $item->name }}"/>
+                                        <label class="form-check-label" for="{{ $item->name }}">
+                                            {{ $item->name }}
+                                        </label>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-6">
+                            <label class="col-lg-4 col-form-label "></label>
+
+                            <div class="col-lg-8 fv-row fv-plugins-icon-container">
+                                <div class="fv-plugins-message-container invalid-feedback" id="error-permission_name"></div>
+                            </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" id="saveButton" class="btn btn-primary">
+                            @lang('label.button.save')
+                        </button>
                     </div>
                 </div>
             </div>
+            </form>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+       $('#data-form').submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "{{ route('settings.role.store') }}",
+            data:new FormData(this),
+            dataType:"JSON",
+            contentType:false,
+            cache:false,
+            processData:false,
+            beforeSend: function (response) {
+                $('#saveButton').attr('disabled',true);
+                $('#saveButton').html('@lang("label.button.process")');
+                cleanError();
+            },
+            success: function (response) {
+                $('#saveButton').attr('disabled',false);
+                $('#saveButton').html('@lang("label.button.save")');
+                if (response.result) {
+                    _success(response.message);
+                    location.href = '{{ route("settings.role") }}';
+                }else{
+                    if (response.message.name) {
+                        $('#name').addClass('is-invalid');
+                        $('#error-name').html(response.message.name[0]);
+                    }
+                    if (response.message.permission_name) {
+                        $('#error-permission_name').html(response.message.permission_name[0]);
+                    }
+                }
+            },
+            error:function(xhr, status, error){
+                $('#saveButton').attr('disabled',false);
+                $('#saveButton').html('@lang("label.button.save")');
+                var err = eval("(" + xhr.responseText + ")");
+                _error(err.message);
+            }
+            });
+        });
+    });
+    function cleanError(){
+        $('#name').removeClass('is-invalid');
+        $('#error-name').html();
+        $('#error-permission_name').html();
+    }
+</script>
 @endsection

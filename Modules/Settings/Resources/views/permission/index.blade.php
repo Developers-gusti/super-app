@@ -180,14 +180,14 @@
             var url = '{{ route("settings.permission.delete", ":id") }}';
             url = url.replace(':id', id );
             Swal.fire({
-                title: "@lang('label.button.delete') : "+name,
-                text: "@lang('label.confirmation_delete')",
+                title: '@lang("label.button.delete") : '+name,
+                text: '@lang("label.confirmation_delete")',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: "@lang('label.button.continue')",
-                cancelButtonText: "@lang('label.button.cancel')",
+                confirmButtonText: '@lang("label.button.continue")',
+                cancelButtonText: '@lang("label.button.cancel")',
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({

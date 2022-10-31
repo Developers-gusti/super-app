@@ -35,7 +35,7 @@
                             </div>
                         </div>
                         <div class="card-footer" style="text-align: right;">
-                            <button id="saveButton" type="submit" class="btn btn-sm btn-primary "><i class="bi bi-save-fill fs-4 me-2"></i>@lang('label.button.update')</button>
+                            <button id="saveButton" type="submit" class="btn btn-sm btn-primary ">@lang('label.button.update')</button>
                         </div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                             </div>
                         </div>
                         <div class="card-footer" style="text-align: right;">
-                            <button id="changePasswordButton" type="submit" class="btn btn-sm btn-primary "><i class="bi bi-key-fill fs-4 me-2"></i>@lang('label.button.change_password')</button>
+                            <button id="changePasswordButton" type="submit" class="btn btn-sm btn-primary ">@lang('label.button.change_password')</button>
                         </div>
                     </div>
                 </div>
