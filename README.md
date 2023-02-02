@@ -40,7 +40,7 @@ DB_USERNAME=YOUR_USERNAME
 DB_PASSWORD=YOUR_PASSWORD
 ```
 
-### 7 Automatic Create Master Table
+### 8 Automatic Create Master Table
 Pada tahap ini anda harus menjalankan perintah terminal untuk melakukan automatic create master table yang ada di database yang telah anda buat dengan perintah sebagai berikut : 
 
 ```shell
